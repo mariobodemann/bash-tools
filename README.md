@@ -11,3 +11,12 @@ Hello World
 
 (Okay that will be colored, I'll maybe figure out how to do this in md ...)
 
+## Usage:
+Include this in your .bashrc: 
+
+for f in $(find ${BASHTOOLS_HOME}/bash-tools/ -iname 'bash*' -type f); do 
+	. $f; 
+done
+
+(Warning: Will execute _all_ fiels under bin/bash-tools starting with bash!
+
