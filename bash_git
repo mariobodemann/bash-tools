@@ -1,0 +1,34 @@
+function is_git() {
+        if git status -s 2>&1 | grep -qo 'Not a git repository'; then
+                echo 0;      
+        else 
+                echo 1;   
+        fi
+}
+
+function git_prompt_current_branch() {
+	git branch | grep \* | cut -d' ' -f2-
+}
+
+function git_prompt_changes() {
+	changes=$(git status -s | grep -o "^." | sort | uniq -c | sed s/\ //g | tr "
+" "-" | tr A-Z a-z | sed s/-//g)
+	if [ -z "$changes" ]; then
+		echo '';
+	else
+		echo '~'$changes
+	fi
+}
+
+function git_prompt() {
+        OLD_PS1="[\u@\h \W]\$ "
+
+        if [ $(is_git) -eq 1 ]; then 
+		export PS1="[\u@\h \W@$(git_prompt_current_branch)$(git_prompt_changes)]\$ "; 
+	else 
+		export PS1=$OLD_PS1; 
+	fi
+}
+
+export PROMPT_COMMAND=git_prompt
+
