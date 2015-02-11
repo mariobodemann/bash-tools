@@ -14,9 +14,9 @@ Hello World
 ## Usage:
 Include this in your .bashrc: 
 
-for f in $(find ${BASHTOOLS_HOME}/bash-tools/ -iname 'bash*' -type f); do 
-	. $f; 
-done
+> for f in $(find ${BASHTOOLS_HOME}/bash-tools/ -iname 'bash*' -type f); do 
+> 	. $f; 
+> done
 
 (Warning: Will execute _all_ fiels under bin/bash-tools starting with bash!
 
