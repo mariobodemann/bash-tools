@@ -13,7 +13,7 @@ function rgbTo256() {
 	echo 'scale=3; 16 + '$1' * 36 + '$2' * 6 + '$3 | bc | cut -d'.' -f1
 }
 
-function rgb() {
+function rgbText() {
 	r=$(rgb126 $1);
 	g=$(rgb126 $2);
 	b=$(rgb126 $3);
@@ -22,4 +22,12 @@ function rgb() {
 
 	color=$(rgbTo256 $r $g $b)
 	tput setab $color; echo -en "$text"; tput sgr0;
+}
+
+function rgbEscape() {
+	echo '\e[38;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
+}
+
+function rgbEscapeEnd() {
+	echo '\e[m'
 }
