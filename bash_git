@@ -20,14 +20,24 @@ function git_prompt_changes() {
 	fi
 }
 
-function git_prompt() {
-        OLD_PS1="[\u@\h \W]\$ "
+function git_escape() {
+	echo "\[$(rgb $1 $2 $3)\]$4\[$(bgr)\]"
+}
 
+function git_prompt() {
         if [ $(is_git) -eq 1 ]; then 
-		export PS1="[\u@\h \W@$(git_prompt_current_branch)$(git_prompt_changes)]\$ "; 
+		GIT_PS1="@$(git_prompt_current_branch)$(git_prompt_changes)";
 	else 
-		export PS1=$OLD_PS1; 
+		GIT_PS1='';
 	fi
+
+	export PS1="[\
+$(git_escape .75 0 0 \\u)\
+@\
+$(git_escape 0 .75 0 \\h) \
+$(git_escape 0 0 .75 \\W)\
+$(git_escape 1 1 0 ${GIT_PS1})\
+]\$ "
 }
 
 export PROMPT_COMMAND=git_prompt
