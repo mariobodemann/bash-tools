@@ -21,6 +21,6 @@ Hello World
 (Warning: Will execute _all_ files in bash-tools starting with bash!
 
 * Draw a Rainbow:
-> rainbow 'hello world'e
+> rainbow 'hello world'
 
 
