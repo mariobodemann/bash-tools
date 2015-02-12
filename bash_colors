@@ -24,10 +24,10 @@ function rgbText() {
 	tput setab $color; echo -en "$text"; tput sgr0;
 }
 
-function rgbEscape() {
+function rgb() {
 	echo '\e[38;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
 }
 
-function rgbEscapeEnd() {
+function bgr() {
 	echo '\e[m'
 }
