@@ -13,6 +13,10 @@ function rgbTo256() {
 	echo 'scale=3; 16 + '$1' * 36 + '$2' * 6 + '$3 | bc | cut -d'.' -f1
 }
 
+function hsvText() {
+	rgbText $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc) $4
+}
+
 function rgbText() {
 	r=$(rgb126 $1);
 	g=$(rgb126 $2);
@@ -35,3 +39,5 @@ function rgb_bg() {
 function bgr() {
 	echo '\e[m'
 }
+
+
