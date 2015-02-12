@@ -36,6 +36,17 @@ function rainbow() {
 	echo -e "$(vsh)"
 }
 
+function rainbow_bg() {
+	text="$1"
+	len=${#text}
+
+	for i in $(seq 0 $((len-1))); do
+		color=$(hsv_bg "$(echo 'scale=3;('$i' / '$len')*360.0' | bc)" 1 1)
+		echo -en "${color}${text:$i:1}"
+	done
+	echo -e "$(vsh)"
+}
+
 function rgbText() {
 	r=$(rgb126 $1);
 	g=$(rgb126 $2);
