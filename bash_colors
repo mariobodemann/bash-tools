@@ -13,8 +13,27 @@ function rgbTo256() {
 	echo 'scale=3; 16 + '$1' * 36 + '$2' * 6 + '$3 | bc | cut -d'.' -f1
 }
 
-function hsvText() {
-	rgbText $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc) $4
+function hsv() {
+	rgb $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc)
+}
+
+function hsv_bg() {
+	rgb_bg $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc)
+}
+
+function vsh() {
+	bgr
+}
+
+function rainbow() {
+	text="$1"
+	len=${#text}
+	
+	for i in $(seq 0 $((len-1))); do 
+		foreground=$(hsv "$(echo 'scale=3;('$i' / '$len')*360.0' | bc)" 1 1)
+		echo -en "${foreground}${text:$i:1}"
+	done
+	echo -e "$(vsh)"
 }
 
 function rgbText() {
@@ -25,7 +44,9 @@ function rgbText() {
 	text=$4;
 
 	color=$(rgbTo256 $r $g $b)
-	tput setab $color; echo -en "$text"; tput sgr0;
+	tput setab $color
+	echo -en "$text"
+	tput sgr0
 }
 
 function rgb() {

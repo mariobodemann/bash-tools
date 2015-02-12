@@ -21,6 +21,6 @@ Hello World
 (Warning: Will execute _all_ files in bash-tools starting with bash!
 
 * Draw a Rainbow:
-> for j in $(seq 0 1 9); do for i in $(seq 0 3 359); do hsvText $i 1 0.$j '.'; done; echo; done
+> rainbow 'hello world'e
 
 
