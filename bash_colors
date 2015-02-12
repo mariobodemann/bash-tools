@@ -28,6 +28,10 @@ function rgb() {
 	echo '\e[38;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
 }
 
+function rgb_bg() {
+	echo '\e[48;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
+}
+
 function bgr() {
 	echo '\e[m'
 }
