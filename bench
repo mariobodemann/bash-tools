@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo -n 'r: '; read r
+echo -n 'g: '; read g
+echo -n 'b: '; read b
+
+echo $r, $g, $b
+
+echo 'Direct: '
+#time for i in {0..999}; do 
+	rgb $r $g $b
+#done > /dev/null
+
+echo 'LUT (exact):'
+#time for i in {0..999}; do 
+	echo "$(cat rgb.lut)
+$r,$g,$b:*" | sort | grep -A1 -B1 '\*' | grep -v '\*' | head -n1 | cut -d":" -f2-;
+#done > /dev/null
+
+echo 'LUT (with estimate):'
+#time for i in {0..999}; do 
+	grep "$r,$g,(0.1|0.2|0.3)" rgb.lut | head -n 1 | cut -d':' -f 2-; 
+#done > /dev/null
+#
