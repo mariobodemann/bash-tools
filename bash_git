@@ -11,12 +11,12 @@ function git_prompt_current_branch() {
 }
 
 function git_prompt_changes() {
-	changes=$(git status -s | grep -o "^." | sort | uniq -c | sed s/\ //g | tr "
+	changes=$(git status -s | grep -o "^.." | sed 's/ //g' | grep -o '^.' |  sort | uniq -c | sed s/\ //g | tr "
 " "-" | tr A-Z a-z | sed s/-//g)
 	if [ -z "$changes" ]; then
 		echo '';
 	else
-		echo '~'$changes
+		echo "($changes)"
 	fi
 }
 
