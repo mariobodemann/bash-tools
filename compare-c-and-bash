@@ -1,0 +1,21 @@
+#!/bin/bash
+errors=0; 
+for r in {0..9}; do 
+  for g in {0..9}; do 
+    for b in {0..9}; do 
+      c=$(./rgb .$r .$g .$b); 
+      bash=$(rgb .$r .$g .$b); 
+      if [ "$c" != "$bash" ]; then 
+        echo -n ".$r .$g .$b: "; 
+        echo -ne ${c}; 
+        echo -n C-Code: $c; 
+        echo -ne $(bgr) vs ${bash}; 
+        echo -n Bash-Code: $bash; 
+        echo -e $(bgr); 
+        ((errors++));
+      fi; 
+    done; 
+  done; 
+done; 
+echo ${errors} Errors found;
+
