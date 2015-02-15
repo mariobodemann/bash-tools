@@ -17,8 +17,8 @@ function hsv() {
 	rgb $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc)
 }
 
-function hsv_bg() {
-	rgb_bg $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc)
+function hsv-bg() {
+	rgb-bg $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc)
 }
 
 function vsh() {
@@ -36,12 +36,12 @@ function rainbow() {
 	echo -e "$(vsh)"
 }
 
-function rainbow_bg() {
+function rainbow-bg() {
 	text="$1"
 	len=${#text}
 
 	for i in $(seq 0 $((len-1))); do
-		color=$(hsv_bg "$(echo 'scale=3;('$i' / '$len')*360.0' | bc)" 1 1)
+		color=$(hsv-bg "$(echo 'scale=3;('$i' / '$len')*360.0' | bc)" 1 1)
 		echo -en "${color}${text:$i:1}"
 	done
 	echo -e "$(vsh)"
@@ -64,7 +64,7 @@ function rgb() {
 	echo '\e[38;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
 }
 
-function rgb_bg() {
+function rgb-bg() {
 	echo '\e[48;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
 }
 
