@@ -1,6 +1,10 @@
-all:rgb.c
-	gcc -g -lm -o rgb rgb.c
-	gcc -g -lm -o rgb-bg rgb.c
+all: color rainbow
+
+color: color.c color_math.c
+	gcc -O0 -g -lm -o color color.c color_math.c
+
+rainbow : rainbow.c color_math.c
+	gcc -g -lm -o rainbow rainbow.c color_math.c
 
 clean:
-	rm rgb rgb-bg
+	rm color rainbow
