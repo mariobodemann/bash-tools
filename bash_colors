@@ -1,24 +1,9 @@
-function colorize() {
- 	tput setab $1; 
- 	tput setaf $2; 
-	echo -ne "$3"; 
-	tput sgr0
-}
-
-function rgb126() { # reads one to six, means map from 0-1 to 0-6
-	printf %4.3f $(echo 'scale=3; a = '$1' * 6; if ( a > 5 ) 5 else a' | bc | cut -d'.' -f1)
-}
-
-function rgbTo256() {
-	echo 'scale=3; 16 + '$1' * 36 + '$2' * 6 + '$3 | bc | cut -d'.' -f1
-}
-
 function hsv() {
-	rgb $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc)
+	${BASH_TOOLS_HOME}/color H $1 $2 $3
 }
 
 function hsv-bg() {
-	rgb-bg $(echo $1 $2 $3 | bc -q ${BASH_TOOLS_HOME}/hsv2rgb.bc)
+	${BASH_TOOLS_HOME}/color h $1 $2 $3
 }
 
 function vsh() {
@@ -26,46 +11,19 @@ function vsh() {
 }
 
 function rainbow() {
-	text="$1"
-	len=${#text}
-	
-	for i in $(seq 0 $((len-1))); do 
-		foreground=$(hsv "$(echo 'scale=3;('$i' / '$len')*360.0' | bc)" 1 1)
-		echo -en "${foreground}${text:$i:1}"
-	done
-	echo -e "$(vsh)"
+	${BASH_TOOLS_HOME}/rainbow $1
 }
 
 function rainbow-bg() {
-	text="$1"
-	len=${#text}
-
-	for i in $(seq 0 $((len-1))); do
-		color=$(hsv-bg "$(echo 'scale=3;('$i' / '$len')*360.0' | bc)" 1 1)
-		echo -en "${color}${text:$i:1}"
-	done
-	echo -e "$(vsh)"
-}
-
-function rgbText() {
-	r=$(rgb126 $1);
-	g=$(rgb126 $2);
-	b=$(rgb126 $3);
-	
-	text=$4;
-
-	color=$(rgbTo256 $r $g $b)
-	tput setab $color
-	echo -en "$text"
-	tput sgr0
+	rainbow $1
 }
 
 function rgb() {
-	echo '\e[38;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
+	${BASH_TOOLS_HOME}/color R $1 $2 $3
 }
 
 function rgb-bg() {
-	echo '\e[48;5;'$(rgbTo256 $(rgb126 $1) $(rgb126 $2) $(rgb126 $3))'m'
+	${BASH_TOOLS_HOME}/color R $1 $2 $3
 }
 
 function bgr() {
