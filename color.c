@@ -8,7 +8,7 @@
 int rgb(char *r, char *g, char *b, Style style);
 int hsv(char *h, char *s, char *v, Style style);
 
-void printHelp();
+void printHelp(const char *program);
 
 int main (int argc, char **argv) {
 	if (argc != 5) {
@@ -35,7 +35,7 @@ int main (int argc, char **argv) {
 	}
 }
 
-void printHelp(char *program) {
+void printHelp(const char *program) {
 	printf("Usage: %s [rRhH] [rh] [gs] [bv] \n\n"
 		 "\tProduces an escapesequence for a 256 color variant.\n"
 		 "\tFirst argument denotes the mode: RGB(rR) or HSV(hH),\n"

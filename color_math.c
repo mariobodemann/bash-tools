@@ -33,7 +33,7 @@ int rgbf(float r, float g, float b, Style style) {
 	g = fclampf(g, 0, 1);
 	b = fclampf(b, 0, 1);
 	
-	char *sequence = malloc( 64 * sizeof(char));
+	char *sequence = (char*)malloc( 64 * sizeof(char));
 	char escape = (style == FOREGROUND) ? 38 : 48;
 	int colorCode = rgbTo256(rgb1to6(r), rgb1to6(g), rgb1to6(b));
 	int charsPrinted = printf( "\\e[%02d;5;%dm", escape, colorCode);
