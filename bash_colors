@@ -23,7 +23,7 @@ function rgb() {
 }
 
 function rgb-bg() {
-	${BASH_TOOLS_HOME}/color R $1 $2 $3
+	${BASH_TOOLS_HOME}/color r $1 $2 $3
 }
 
 function bgr() {
