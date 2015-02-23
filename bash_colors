@@ -22,6 +22,10 @@ function rainbow-text() {
 	rainbow $@ | sed 's/\(\\\[\|\\\]\)//g'
 }
 
+function rainbow-multiline() {
+	rainbow $@ | sed 's/\\\]\\\[/\n/g' | sed 's/\\\[//g' | sed 's/\\\]//g'
+}
+
 function rgb() {
 	${BASH_TOOLS_HOME}/color R $1 $2 $3
 }
