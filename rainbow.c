@@ -27,5 +27,5 @@ void rainbow (const char *word) {
 			printf("%c", word[i]);
 		}
 	}
-	printf("\e[m");
+	printf("\\[\e[m\\]");
 }
