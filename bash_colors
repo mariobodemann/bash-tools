@@ -11,15 +11,15 @@ function vsh() {
 }
 
 function rainbow() {
-	${BASH_TOOLS_HOME}/rainbow $1
+	${BASH_TOOLS_HOME}/rainbow $@
 }
 
 function rainbow-bg() {
-	rainbow $1
+	rainbow $@
 }
 
 function rainbow-text() {
-	rainbow $1 | sed 's/\(\\\[\|\\\]\)//g'
+	rainbow $@ | sed 's/\(\\\[\|\\\]\)//g'
 }
 
 function rgb() {

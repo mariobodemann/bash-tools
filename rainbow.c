@@ -8,10 +8,8 @@
 void rainbow( const char *word);
 
 int main (int argc, char **argv) {
-	if (argc == 2) {
-		rainbow( argv[1] );
-	} else {
-		rainbow("Please use exactly one text parameter to be rainbowified.");
+	for(int i = 1; i < argc; ++i) {
+		rainbow( argv[i] );
 	}
 }
 
