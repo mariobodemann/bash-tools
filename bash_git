@@ -32,10 +32,10 @@ function git_prompt() {
 	fi
 
 	export PS1="[\
-$(git_escape .75 0 0 \\u)\
+$(git_escape 1 .2 .2 \\u)\
 @\
 $(git_escape 0 .75 0 \\h) \
-$(git_escape 0 0 .75 \\W)\
+$(git_escape .3 .3 .85 \\W)\
 ${GIT_PS1}\
 ]\$ "
 }
