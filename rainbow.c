@@ -6,6 +6,7 @@
 #include "color_math.h"
 
 void rainbow( const char *word, Style style);
+int rainbowFromFile( const char *file, Style style);
 int progressArgument( char**, int, int, Style*);
 void printHelp( char*);
 
@@ -15,7 +16,7 @@ int main (int argc, char **argv) {
 	for(int i = 1; i < argc; ++i) {
 		if (seekMoreArguments && argv[i][0] == '-'){
 			seekMoreArguments = progressArgument(argv, argc, i, &style);
-		} else {
+		} else if (argv[i][0] != '@' || ! rainbowFromFile(&argv[i][1], style)) {
 			rainbow(argv[i], style);
 		}
 	}
@@ -43,11 +44,49 @@ int progressArgument(char **argv, int argc, int arg, Style *style) {
 }
 
 void printHelp(char *program) {
-	printf("Usage %s [-fg] [-esc] [--]\n", program);
+	printf("Usage %s [-fg] [-esc] [--|@FILE]\n", program);
 	printf("\n");
-	printf("\t-bg  use flip usage of foreground/background (foreground is default)\n");
-	printf("\t-esc flip escape color codes with [] from now on (usefull for PS1, default is to not escape)\n");
+	printf("\t-bg   use flip usage of foreground/background (foreground is default)\n");
+	printf("\t-esc  flip escape color codes with [] from now on (usefull for PS1, default is to not escape)\n");
+	printf("\t@FILE read text from file\n");
 	printf("\t-h   print this help.\n");
+}
+
+int rainbowFromFile (const char *file, Style style) {
+	char *filename;
+	if (strcmp(file, "-") == 0) {
+		filename = (char*)calloc(64,sizeof(char));
+		strcpy(filename, "/dev/stdin");
+	} else {
+		filename = (char*)calloc(sizeof(file), sizeof(char));
+		strcpy(filename, file);
+	}
+
+	FILE *f = fopen(filename, "r");
+	if (f) {
+		char *line = 0;
+		size_t length = 0;
+		int charsRead = 1;
+
+		char *complete = 0;
+
+		do {
+			charsRead = getline(&line, &length, f);
+			if (charsRead > 0) {
+				if (!complete) {
+					complete = strdup(line);
+				} else {
+					asprintf(&complete, "%s%s", complete, line);
+				}
+			}
+		} while (charsRead > 0);
+
+		rainbow(complete, style);
+		fclose(f);
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 void rainbow (const char *word, Style style) {
