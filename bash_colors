@@ -15,15 +15,7 @@ function rainbow() {
 }
 
 function rainbow-bg() {
-	rainbow $@
-}
-
-function rainbow-text() {
-	rainbow $@ | sed 's/\(\\\[\|\\\]\)//g'
-}
-
-function rainbow-multiline() {
-	rainbow $@ | sed 's/\\\]\\\[/\n/g' | sed 's/\\\[//g' | sed 's/\\\]//g'
+	rainbow -bg -- $@
 }
 
 function rgb() {

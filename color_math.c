@@ -28,17 +28,39 @@ int rgbTo256(float r, float g, float b) {
 	return 16 + (int)(r * 36) + (int)(g * 6) + (int)b;
 }
 
-int rgbf(float r, float g, float b, Style style) {
+int snprintrgbf(char* output, size_t length, float r, float g, float b, Style style) {
+	const int SEQUENCE_LENGTH = 64;
+
 	r = fclampf(r, 0, 1);
 	g = fclampf(g, 0, 1);
 	b = fclampf(b, 0, 1);
 	
-	char *sequence = (char*)malloc( 64 * sizeof(char));
-	char escape = (style == FOREGROUND) ? 38 : 48;
+	char *sequence = (char*)malloc( SEQUENCE_LENGTH * sizeof(char));
+	char layer = (style & BACKGROUND) == BACKGROUND ? 48 : 38;
 	int colorCode = rgbTo256(rgb1to6(r), rgb1to6(g), rgb1to6(b));
-	int charsPrinted = printf( "\\e[%02d;5;%dm", escape, colorCode);
+	int charsPrinted;
+	if ( (style & ESCAPE ) == ESCAPE ) {
+		charsPrinted = snprintf(sequence, SEQUENCE_LENGTH, "\\[\\e[%02d;5;%dm\\]",  layer, colorCode);
+	} else {
+		charsPrinted = snprintf(sequence, SEQUENCE_LENGTH, "\\e[%02d;5;%dm", layer, colorCode);
+	}
+
+	if ( charsPrinted < length && charsPrinted < SEQUENCE_LENGTH) {
+		strncpy(output, sequence, charsPrinted);
+	} else {
+		charsPrinted = -1;
+	}
+
 	free(sequence);
-	return charsPrinted > 0;
+	return charsPrinted;
+}
+
+void printrgbend( Style style ) {
+	if ((style & ESCAPE) == ESCAPE) {
+		printf("\\[\\e[m\\]");
+	} else {
+		printf("\\e[m");
+	}
 }
 
 int hsvToRgb(float h, float s, float v, float *r, float *g, float *b) {

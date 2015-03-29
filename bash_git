@@ -26,7 +26,7 @@ function git_escape() {
 
 function git_prompt() {
         if [ $(is_git) -eq 1 ]; then 
-		GIT_PS1="$(rainbow "@$(git_prompt_current_branch)$(git_prompt_changes)")";
+		GIT_PS1="$(rainbow -esc -- "@$(git_prompt_current_branch)$(git_prompt_changes)")";
 	else 
 		GIT_PS1='';
 	fi
