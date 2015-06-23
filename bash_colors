@@ -30,4 +30,26 @@ function bgr() {
 	echo '\e[m'
 }
 
+function big()
+{
+	text=$1
+	shift
+
+	color=$1
+	shift
+
+	if [ -z "$color" ]; then
+		color="32"
+	fi
+
+	echo -e '\e['$color'm'
+	figlet --termwidth --font pagga $text
+	echo -e '\e[m'
+}
+
+function big_rainbow()
+{
+	echo -e "$(figlet --termwidth -f bigascii12 $@ | sed 's/\\/X/g' | rainbow -- @-)";
+}
+
 

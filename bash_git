@@ -1,3 +1,24 @@
+
+function git_guys() {
+	files="$(git status | grep 'modified:' | cut -d':' -f2 | grep -o '[^ ]*')"
+	git_blamer $files;
+}
+
+function git_blamer() {
+	files=$@
+	if [ "$(echo $files | wc -c)" -le "1" ]; then
+		echo "No changes detected"
+		return
+	fi
+
+	authors=''
+	for file in $files; do
+		authors="$authors $(git blame $file | cut -d'(' -f2 | cut -d')' -f1 | cut -d'2' -f1 | sed 's/\ \{2,\}//g' | sed 's/\ /#/g')"
+	done
+
+	echo $authors | tr ' ' '\n' | grep -v "Not#Committed#Yet" | sort | uniq -c | sort -rn | sed 's/#/\ /g'
+}
+
 function is_git() {
         if git status -s 2>&1 | grep -qo 'Not a git repository'; then
                 echo 0;      

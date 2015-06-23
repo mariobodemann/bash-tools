@@ -1,0 +1,22 @@
+function android_unlock() {
+	adb shell input keyevent 26; #power
+	#                     x1  y1  x2  y2  duration
+	adb shell input swipe 390 910 735 910 500
+}
+
+function android_screencap() {
+	file="$1"
+	if [ -z "${file}" ]; then
+		echo -n 'filename: '
+		read file
+	fi
+
+	adb shell screencap -p | sed 's/\r$//' | convert -monitor -scale '25%' png:- "${file}"
+}
+
+export ANDROID_HOME=$HOME/android-sdk
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/android-ndk-r9c
+
+export PATH=$HOME/bin/:/opt/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_NDK_HOME:$PATH
+
+

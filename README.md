@@ -6,27 +6,31 @@ Tools for helping daily work
 Tools for converting an rgb (0..1) color into a console 256 color.
 
 Example:
-> rgb 1 .5 0 'Hello World'
-Hello World
+> rgb 1 .5 0
+\e[38;5;214m
 
-(Okay that will be colored, I'll maybe figure out how to do this in md ...)
+> echo -e "$(rgb 1 .5 0)hello world$(bgr)"
+hello world
+
+(Okay that will be colored in orange, I'll maybe figure out how to do this in md)
 
 ## Usage
-* Include this in your .bashrc: 
+* Include this in your .bashrc:
 
 > export BASH_TOOLS_HOME='~/bin/bash'
 > for f in $(find ${BASH_TOOLS_HOME} -maxdepth 1 -iname 'bash\*' -type f ); do
 >         . $f;
 > done
-(Warning: Will execute _all_ files in bash-tools starting with bash!)
+
+(Warning: Will execute _all_ files in bash-tools starting with 'bash'!)
 
 * Draw a Rainbow:
-> rainbow 'hello world'
+> echo -e $(rainbow 'hello')
 
 * Use some rainbows for output command
 
-> for file in $(ls /usr/share/figlet/\*flf); do
->    f=$(basename $file .flf);
+> for file in $(ls /usr/share/figlet/\*lf); do
+>    f=$(basename $file | cut -d'.' -f1);
 >    echo -e "$(rgb 0 0 0)$(figlet -f $f $f | sed 's/\\/V/g' | rainbow -bg -- @-;)";
 > done;
 
