@@ -15,4 +15,4 @@
 # > git config --global diff.image.command '~/bin/git-imgdiff'
 #
 
-compare $2 $1 png:- | montage -geometry +4+4 $2 - $1 png:- | display -title "$1" -
+compare $2 $1 png:- | montage -background none -geometry +4+4 $2 - $1 png:- | display png:- -title "$1"
