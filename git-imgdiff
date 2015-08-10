@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Shows graphical differences between assets. Needs ImageMagick.
+#
+# Please add a 
+#
+# > cat .gitattributes 
+# *.gif diff=image
+# *.jpg diff=image
+# *.png diff=image
+#
+# and some
+# 
+# > git config --global core.attributesfile '~/.gitattributes'
+# > git config --global diff.image.command '~/bin/git-imgdiff'
+#
+
+compare $2 $1 png:- | montage -geometry +4+4 $2 - $1 png:- | display -title "$1" -
