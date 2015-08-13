@@ -78,8 +78,8 @@ int hsv(char *h, char *s, char *v, Style style) {
 }
 
 int printRGB( float fr, float fg, float fb, Style style) {
-	char *output = (char*) malloc(64 * sizeof(char));
-	int chars = snprintrgbf(output, 64, fr, fg, fb, style);
+	char *output = (char*) malloc(MAX_CHARS * sizeof(char));
+	int chars = snprintrgbf(output, MAX_CHARS, fr, fg, fb, style);
 	if (chars > 0) {
 		printf("%s", output);
 	}

@@ -29,23 +29,21 @@ int rgbTo256(float r, float g, float b) {
 }
 
 int snprintrgbf(char* output, size_t length, float r, float g, float b, Style style) {
-	const int SEQUENCE_LENGTH = 64;
-
 	r = fclampf(r, 0, 1);
 	g = fclampf(g, 0, 1);
 	b = fclampf(b, 0, 1);
 	
-	char *sequence = (char*)malloc( SEQUENCE_LENGTH * sizeof(char));
+	char *sequence = (char*)malloc(MAX_CHARS * sizeof(char));
 	char layer = (style & BACKGROUND) == BACKGROUND ? 48 : 38;
 	int colorCode = rgbTo256(rgb1to6(r), rgb1to6(g), rgb1to6(b));
 	int charsPrinted;
 	if ( (style & ESCAPE ) == ESCAPE ) {
-		charsPrinted = snprintf(sequence, SEQUENCE_LENGTH, "\\[\\e[%02d;5;%dm\\]",  layer, colorCode);
+		charsPrinted = snprintf(sequence, MAX_CHARS, "\\[\\e[%02d;5;%dm\\]",  layer, colorCode);
 	} else {
-		charsPrinted = snprintf(sequence, SEQUENCE_LENGTH, "\\e[%02d;5;%dm", layer, colorCode);
+		charsPrinted = snprintf(sequence, MAX_CHARS, "\\e[%02d;5;%dm", layer, colorCode);
 	}
 
-	if ( charsPrinted < length && charsPrinted < SEQUENCE_LENGTH) {
+	if ( charsPrinted < length && charsPrinted < MAX_CHARS) {
 		strncpy(output, sequence, charsPrinted);
 	} else {
 		charsPrinted = -1;

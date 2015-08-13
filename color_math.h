@@ -1,5 +1,8 @@
 #ifndef COLOR_MATH
 #define COLOR_MATH
+
+#define MAX_CHARS 2048
+
 typedef enum {
 	DEFAULT = 0,
 	BACKGROUND = 1,

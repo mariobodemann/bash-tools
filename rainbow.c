@@ -55,10 +55,10 @@ void printHelp(char *program) {
 int rainbowFromFile (const char *file, Style style) {
 	char *filename;
 	if (strcmp(file, "-") == 0) {
-		filename = (char*)calloc(64,sizeof(char));
+		filename = (char*)calloc(MAX_CHARS, sizeof(char));
 		strcpy(filename, "/dev/stdin");
 	} else {
-		filename = (char*)calloc(sizeof(file), sizeof(char));
+		filename = (char*)calloc(MAX_CHARS, sizeof(char));
 		strcpy(filename, file);
 	}
 
@@ -95,8 +95,8 @@ void rainbow (const char *word, Style style) {
 	int i = 0;
 	for ( i = 0; i < len; ++i) {
 		if (hsvToRgb( i * 360.0f / len, 1.0f, 1.0f, &r, &g, &b)) {
-			char *color = (char*)calloc(64, sizeof(char));
-			int chars = snprintrgbf(color, 64, r, g, b, style);
+			char *color = (char*)calloc(MAX_CHARS, sizeof(char));
+			int chars = snprintrgbf(color, MAX_CHARS, r, g, b, style);
 			if ( chars > 0 ) {
 				printf( "%s%c", color, word[i]);
 			}
