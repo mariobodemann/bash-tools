@@ -63,3 +63,4 @@ ${GIT_PS1}\
 
 export PROMPT_COMMAND=git_prompt
 
+source ${BASH_TOOLS_HOME}/git-flow-completion.bash
