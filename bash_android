@@ -7,11 +7,11 @@ function android_unlock() {
 function android_screencap() {
 	file="$1"
 	if [ -z "${file}" ]; then
-		echo -n 'filename: '
-		read file
+		file="device-$(date +%F-%H%M%S).png"
 	fi
 
-	adb shell screencap -p | sed 's/\r$//' | convert -monitor -scale '25%' png:- "${file}"
+	adb shell screencap -p | sed 's/\r$//' | convert -monitor png:- "${file}" >&2;
+	echo $file;
 }
 
 export ANDROID_HOME=$HOME/android-sdk
