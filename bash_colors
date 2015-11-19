@@ -43,13 +43,13 @@ function big()
 	fi
 
 	echo -e '\e['$color'm'
-	figlet --termwidth --font pagga $text
+	figlet -t -f pagga $text
 	echo -e '\e[m'
 }
 
 function big_rainbow()
 {
-	echo -e "$(figlet --termwidth -f bigascii12 $@ | sed 's/\\/X/g' | rainbow -- @-)";
+	echo -e "$(figlet -t -f bigascii12 $@ | sed 's/\\/X/g' | rainbow -- @-)";
 }
 
 
