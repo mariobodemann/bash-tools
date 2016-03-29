@@ -45,7 +45,16 @@ function git_escape() {
 	echo "\[$(rgb $1 $2 $3)\]$4\[$(bgr)\]"
 }
 
+function last_command_successful() {
+	if [ $1 == 0 ]; then
+		git_escape 1 1 0 '🐧';
+	else
+		git_escape 1 .5 0 '🔥';
+	fi;
+}
+
 function git_prompt() {
+	local last_exit="$?"
         if [ $(is_git) -eq 1 ]; then 
 		GIT_PS1="$(rainbow -esc -- "@$(git_prompt_current_branch)$(git_prompt_changes)")";
 	else 
@@ -58,6 +67,7 @@ $(git_escape 1 .2 .2 \\u)\
 $(git_escape 0 .75 0 \\h) \
 $(git_escape .3 .3 .85 \\W)\
 ${GIT_PS1}\
+$(last_command_successful ${last_exit})\
 ]\$ "
 }
 
