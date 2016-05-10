@@ -4,14 +4,18 @@ function android_unlock() {
 	adb shell input swipe 390 910 735 910 500
 }
 
-function android_screencap() {
-	file="$1"
-	if [ -z "${file}" ]; then
-		file="device-$(date +%F-%H%M%S).png"
-	fi
+function android_connect_wearable() {
+	adb forward tcp:4444 localabstract:/adb-hub
+	adb connect 127.0.0.1:4444
+	adb devices -l
+}
 
-	adb shell screencap -p | sed 's/\r$//' | convert -monitor png:- "${file}" >&2;
-	echo $file;
+function android_tempfile_name() {
+	echo "device-$(date +%F-%H%M%S).png"
+}
+
+function android_screencap() {
+	adb $@ shell screencap -p | sed 's/\r$//'
 }
 
 export ANDROID_HOME=$HOME/android-sdk
