@@ -1,0 +1,1 @@
+alias wine32='WINEPREFIX=~/.wine32 WINEARCH=win32 wine32'
