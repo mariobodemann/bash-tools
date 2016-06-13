@@ -1,0 +1,25 @@
+function panoramize_image() {
+	image=$1
+	shift
+	if [ -z "$image" ]; then
+		echo 'error: please specify image.' >&2
+	else
+		size="$(identify ${image} | grep -o '[0-9]\+x[0-9]\+' | head -1)"
+		regex="([0-9]+)x([0-9]+)"; 
+
+		if [[ ${size} =~ ${regex} ]]; then 
+			width="${BASH_REMATCH[1]}"
+			height="${BASH_REMATCH[2]}"
+
+			exiftool -FullPanoWidthPixels=${width} ${image}
+			exiftool -FullPanoHeightPixels=${height} ${image}
+			exiftool -UsePanoramaViewer=True ${image}
+
+			echo done
+			exiftool $image
+		else 
+			echo 'input has wrong size.' >&2 
+		fi;
+
+	fi
+}
