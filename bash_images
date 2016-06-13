@@ -5,9 +5,9 @@ function panoramize_image() {
 		echo 'error: please specify image.' >&2
 	else
 		size="$(identify ${image} | grep -o '[0-9]\+x[0-9]\+' | head -1)"
-		regex="([0-9]+)x([0-9]+)"; 
+		regex="([0-9]+)x([0-9]+)";
 
-		if [[ ${size} =~ ${regex} ]]; then 
+		if [[ ${size} =~ ${regex} ]]; then
 			width="${BASH_REMATCH[1]}"
 			height="${BASH_REMATCH[2]}"
 
@@ -17,9 +17,38 @@ function panoramize_image() {
 
 			echo done
 			exiftool $image
-		else 
-			echo 'input has wrong size.' >&2 
+		else
+			echo 'input has wrong size.' >&2
 		fi;
 
 	fi
+}
+
+function svg_to_ic() {
+	input=${1}
+	shift
+
+	re="^(.*),([0-9]+)x(.+)";
+
+	sizes='./app/src/main/res/mipmap-xxxhdpi/ic_launcher.png,192x192
+./app/src/main/res/mipmap-xxhdpi/ic_launcher.png,144x144
+./app/src/main/res/mipmap-xhdpi/ic_launcher.png,96x96
+./app/src/main/res/mipmap-mdpi/ic_launcher.png,48x48
+./app/src/main/res/mipmap-hdpi/ic_launcher.png,72x72
+./app/src/main/ic_launcher-web.png,512x512'
+
+
+	for s in ${sizes}; do
+		if [[ "${s}" =~ ${re} ]]; then
+			output=${BASH_REMATCH[1]};
+			width=${BASH_REMATCH[2]};
+			height=${BASH_REMATCH[3]};
+
+			echo 'Working on "' ${output} '" ...'
+
+			inkscape ${input} -w${width} -h${height} --export-background-opacity=0 --export-png=${output}
+		else
+			echo 'Internal error for "'$s'", please check "sizes" variable.'
+		fi
+	done
 }
