@@ -12,7 +12,7 @@ void printHelp( char*);
 
 int main (int argc, char **argv) {
 	int seekMoreArguments = 1;
-	Style style = DEFAULT;
+	Style style;
 	for(int i = 1; i < argc; ++i) {
 		if (seekMoreArguments && argv[i][0] == '-'){
 			seekMoreArguments = progressArgument(argv, argc, i, &style);
@@ -28,10 +28,10 @@ int main (int argc, char **argv) {
 int progressArgument(char **argv, int argc, int arg, Style *style) {
 	int seekMoreArguments = 1;
 	if (argv[arg][0] == '-') {
-		if (argv[arg] - strstr(argv[arg], "bg") <= 2) {
-			*style = (Style)(*style ^ BACKGROUND);
-		} else if (argv[arg] - strstr(argv[arg], "esc") <= 2) {
-			*style = (Style)(*style ^ ESCAPE);
+		if ((int)strstr(argv[arg], "bg") - (int)argv[arg] <= 2) {
+			style->background = true;
+		} else if ((int)strstr(argv[arg], "esc") - (int)argv[arg] <= 2) {
+			style->escape = true;
 		} else if (argv[arg][1] == '-') {
 			seekMoreArguments = 0;
 		} else if (argv[arg][1] == 'h') {

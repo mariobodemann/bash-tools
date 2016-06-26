@@ -5,6 +5,15 @@
 
 #include "color_math.h"
 
+Style::Style()
+	: Style(false, false) {
+}
+
+Style::Style(bool background, bool escape)
+	: background(background),
+	  escape(escape) {
+}
+
 float fclampf(float x, float minValue, float maxValue) {
 	return fminf(maxValue, fmaxf(minValue, x));
 }
@@ -34,10 +43,10 @@ int snprintrgbf(char* output, size_t length, float r, float g, float b, Style st
 	b = fclampf(b, 0, 1);
 	
 	char *sequence = (char*)malloc(MAX_CHARS * sizeof(char));
-	char layer = (style & BACKGROUND) == BACKGROUND ? 48 : 38;
+	char layer = style.background ? 48 : 38;
 	int colorCode = rgbTo256(rgb1to6(r), rgb1to6(g), rgb1to6(b));
 	int charsPrinted;
-	if ( (style & ESCAPE ) == ESCAPE ) {
+	if (style.escape) {
 		charsPrinted = snprintf(sequence, MAX_CHARS, "\\[\\e[%02d;5;%dm\\]",  layer, colorCode);
 	} else {
 		charsPrinted = snprintf(sequence, MAX_CHARS, "\\e[%02d;5;%dm", layer, colorCode);
@@ -53,8 +62,8 @@ int snprintrgbf(char* output, size_t length, float r, float g, float b, Style st
 	return charsPrinted;
 }
 
-void printrgbend( Style style ) {
-	if ((style & ESCAPE) == ESCAPE) {
+void printrgbend(Style style) {
+	if (style.escape) {
 		printf("\\[\\e[m\\]");
 	} else {
 		printf("\\e[m");

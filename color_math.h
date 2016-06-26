@@ -3,11 +3,13 @@
 
 #define MAX_CHARS 2048
 
-typedef enum {
-	DEFAULT = 0,
-	BACKGROUND = 1,
-	ESCAPE = 2
-} Style;
+struct Style {
+	bool background;
+	bool escape;
+
+	Style();
+	Style(bool background, bool escape);
+};
 
 float fclampf(float x, float minValue, float maxValue);
 

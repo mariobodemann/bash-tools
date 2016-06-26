@@ -11,6 +11,9 @@ int hsv(char *h, char *s, char *v, Style style);
 int printRGB( float fr, float fg, float fb, Style style);
 void printHelp(const char *program);
 
+static Style DEFAULT(false, false);
+static Style BACKGROUND(true, false);
+
 int main (int argc, char **argv) {
 	if (argc != 5) {
 		printHelp(argv[0]);
