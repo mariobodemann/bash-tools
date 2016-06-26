@@ -49,7 +49,26 @@ function big()
 
 function big_rainbow()
 {
-	echo -e "$(figlet -t -f bigascii12 $@ | sed 's/\\/X/g' | rainbow -- @-)";
-}
+        text=$1
+	shift
 
+	font=$1
+	shift
+
+	if [ -z "$font" ]; then
+		font=small
+	fi
+
+	bg=$1
+	shift
+
+	if [ -z "$bg" ]; then
+		rainbow='rainbow';
+	else
+		rainbow='rainbow-bg';
+	fi
+
+	echo -e "$($rainbow -- "$(figlet -t -f $font $text | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
+
+}
 
