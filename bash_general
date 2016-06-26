@@ -1,7 +1,10 @@
 export TERM=xterm-256color
 export GREP_COLOR=42
 
-alias grep='grep --colour=auto'
+if [ "$(grep -io android /proc/version)" -eq "0" ]; then
+	alias grep='grep --colour=auto'
+fi
+
 alias ls='ls -h --color'
 alias l='ls'
 alias ll='ls -l'

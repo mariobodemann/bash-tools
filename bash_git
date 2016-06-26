@@ -47,7 +47,11 @@ function git_escape() {
 
 function last_command_successful() {
 	if [ $1 == 0 ]; then
-		git_escape 1 1 0 '🐧';
+		if [ "$(grep -io android /proc/version)" ]; then
+			git_escape 0.25 1 0 ' 📱';
+		else
+			git_escape 1 1 0 '🐧';
+		fi;
 	else
 		git_escape 1 .5 0 '🔥';
 	fi;
