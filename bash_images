@@ -52,3 +52,25 @@ function svg_to_ic() {
 		fi
 	done
 }
+
+function mp4-to-gif() {
+	input=${1}
+	shift
+
+	if [ -z "${input}" ]; then
+		input="-";
+	fi
+
+	output=${1}
+	shift
+
+	if [ -z "${output}" ]; then
+		output="/tmp/output.gif"
+	fi
+
+	figlet 'generate palette'
+	ffmpeg -y -ss 30 -t 3 -i "${input}" -vf fps=10,scale=320:-1:flags=lanczos,palettegen "${output}-palette.png"
+
+	figlet 'generate gif'
+	ffmpeg -ss 30 -t 3 -i "${input}" -i "${output}-palette.png" -filter_complex "fps=10,scale=320:-1:flags=lanczos[x];[x][1:v]paletteuse" "${output}"
+}
