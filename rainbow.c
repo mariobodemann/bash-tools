@@ -28,9 +28,9 @@ int main (int argc, char **argv) {
 int progressArgument(char **argv, int argc, int arg, Style *style) {
 	int seekMoreArguments = 1;
 	if (argv[arg][0] == '-') {
-		if ((int)strstr(argv[arg], "bg") - (int)argv[arg] <= 2) {
+		if ((size_t)strstr(argv[arg], "bg") - (size_t)argv[arg] <= 2) {
 			style->background = true;
-		} else if ((int)strstr(argv[arg], "esc") - (int)argv[arg] <= 2) {
+		} else if ((size_t)strstr(argv[arg], "esc") - (size_t)argv[arg] <= 2) {
 			style->escape = true;
 		} else if (argv[arg][1] == '-') {
 			seekMoreArguments = 0;

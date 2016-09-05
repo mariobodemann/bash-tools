@@ -6,7 +6,8 @@
 #include "color_math.h"
 
 Style::Style()
-	: Style(false, false) {
+	: background(false),
+	  escape(false) {
 }
 
 Style::Style(bool background, bool escape)
