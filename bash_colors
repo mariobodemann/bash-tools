@@ -68,7 +68,6 @@ function big_rainbow()
 		rainbow='rainbow-bg';
 	fi
 
-	echo -e "$($rainbow -- "$(figlet -t -f $font $text | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
-
+	echo -e "$($rainbow "$(figlet -t -f $font $text | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
 }
 
