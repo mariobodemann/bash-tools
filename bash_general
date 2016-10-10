@@ -1,14 +1,6 @@
 export TERM=xterm-256color
 export GREP_COLOR=42
 
-if [ -z "$(grep -io android /proc/version)" ]; then
-	alias grep='grep --colour=auto'
-	alias xclip="xclip -selection c"
-else
-	alias display='termux-share -d'
-	alias xclip='termux-clipboard-set'
-fi
-
 alias ls='ls -h --color'
 alias l='ls'
 alias ll='ls -l'
@@ -17,4 +9,16 @@ alias llg='ll | grep'
 alias la='ls -a'
 alias lla='ll -a'
 alias llag='lla | grep'
+
+if [ ! -e /proc/version ]; then
+	unalias ls
+	alias ls='ls -G -h'
+elif [ -z "$(grep -io android /proc/version)" ]; then
+	alias grep='grep --colour=auto'
+	alias xclip="xclip -selection c"
+else
+	alias display='termux-share -d'
+	alias xclip='termux-clipboard-set'
+fi
+
 
