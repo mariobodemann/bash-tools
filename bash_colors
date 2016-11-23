@@ -71,3 +71,21 @@ function big_rainbow()
 	echo -e "$($rainbow "$(figlet -t -f $font $text | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
 }
 
+function rainbowify_output()
+{
+        text=$1
+	shift
+
+	bg=$1
+	shift
+
+	if [ -z "$bg" ]; then
+		rainbow='rainbow';
+	else
+		rainbow='rainbow-bg';
+	fi
+
+	echo -e "$($rainbow "$(echo -ne "${text}" | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
+}
+
+
