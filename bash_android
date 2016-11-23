@@ -18,8 +18,8 @@ function android_screencap() {
 	adb $@ shell screencap -p | sed 's/\r$//'
 }
 
-export ANDROID_HOME=$HOME/android-sdk
-export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/android-ndk-r9c
+export ANDROID_HOME=$HOME/Android/sdk
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
 
 export PATH=$HOME/bin/:/opt/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_NDK_HOME:$PATH
 

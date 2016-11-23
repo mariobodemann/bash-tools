@@ -1,6 +1,17 @@
 export TERM=xterm-256color
 export GREP_COLOR=42
 
+export HISTFILESIZE=-1
+export HISSIZE=-1
+
+if [ -z "$(grep -io android /proc/version)" ]; then
+	alias grep='grep --colour=auto'
+	alias xclip="xclip -selection c"
+else
+	alias display='termux-share -d'
+	alias xclip='termux-clipboard-set'
+fi
+
 alias ls='ls -h --color'
 alias l='ls'
 alias ll='ls -l'
@@ -20,5 +31,4 @@ else
 	alias display='termux-share -d'
 	alias xclip='termux-clipboard-set'
 fi
-
 
