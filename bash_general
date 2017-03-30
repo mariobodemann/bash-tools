@@ -21,6 +21,11 @@ alias la='ls -a'
 alias lla='ll -a'
 alias llag='lla | grep'
 
+alias 🏡='cd'
+alias 🤖='adb'
+alias 🌍='google-chrome&'
+alias 🙋='echo '\''I am so happy'\'' | big_rainbow'
+
 if [ ! -e /proc/version ]; then
 	unalias ls
 	alias ls='ls -G -h'
