@@ -1,0 +1,44 @@
+#!/bin/bash
+
+input=$1
+if [ -z "$1" ]; then
+	input=/var/lib/AccountsService/icons/$USER
+fi;
+shift
+
+output=$1
+if [ -z "$1" ]; then
+	output=/tmp/parrot-$(basename $input).gif
+fi;
+shift
+
+parrot=$1
+if [ -z "$1" ]; then
+	parrot=$BASH_TOOLS_HOME/parrot.gif
+fi;
+shift
+
+command="convert +antialias"
+
+geometries[0]="20x20+0+0"
+geometries[1]="20x20-1-1"
+geometries[2]="20x20-3-0"
+geometries[3]="20x20-2+0"
+geometries[4]="20x20-5+1"
+geometries[5]="20x20-7+1"
+geometries[6]="20x20-6+2"
+geometries[7]="20x20-3+4"
+geometries[8]="20x20-1+2"
+geometries[9]="20x20+1+1"
+
+for i in $(seq 0 9); do
+	frame="$(printf "frame_%05d.gif" $i)"
+	convert $parrot[$i] $input -geometry ${geometries[i]} -composite $frame
+	command="$command -dispose Previous -delay 3 $frame"
+done
+
+command="$command -loop 0 $output"
+
+echo $command
+$command
+rm frame_*gif
