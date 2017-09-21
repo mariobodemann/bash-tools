@@ -47,9 +47,7 @@ function git_escape() {
 
 function last_command_successful() {
 	if [ $1 == 0 ]; then
-		if [ ! -e /proc/version ]; then
-			git_escape 1 1 0.8 ''
-		elif [ "$(grep -io android /proc/version)" ]; then
+		if [ "$(uname -a | grep -i android)" ]; then
 			git_escape 0.25 1 0 ' 📱';
 		else
 			git_escape 1 1 0 '🐧';

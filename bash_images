@@ -4,7 +4,7 @@ function panoramize_image() {
 	if [ -z "$image" ]; then
 		echo 'error: please specify image.' >&2
 	else
-		size="$(identify ${image} | grep -o '[0-9]\+x[0-9]\+' | head -1)"
+		size="$(identify ${image} | grep -o '[0-9]*x[0-9]*' | head -1)"
 		regex="([0-9]+)x([0-9]+)";
 
 		if [[ ${size} =~ ${regex} ]]; then
@@ -14,7 +14,7 @@ function panoramize_image() {
 			exiftool -FullPanoWidthPixels=${width} ${image}
 			exiftool -FullPanoHeightPixels=${height} ${image}
 			exiftool -UsePanoramaViewer=True ${image}
-
+        		1exiftool -ProjectionType=equirectangular ${image}
 			echo done
 			exiftool $image
 		else
