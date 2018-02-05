@@ -32,8 +32,14 @@ function git_prompt_current_branch() {
 }
 
 function git_prompt_changes() {
-	changes=$(git status -s | grep -o "^.." | sed 's/ //g' | grep -o '^.' |  sort | uniq -c | sed s/\ //g | tr "
+	if [ -e /proc/version ]; then
+		changes=$(git status -s | grep -o "^.." | sed 's/ //g' | grep -o '^.' |  sort | uniq -c | sed s/\ //g | tr "
 " "-" | tr A-Z a-z | sed s/-//g)
+	else
+		changes=$(git status -s | cut -d' ' -f2 | sed 's/ //g' | grep -o '^.' |  sort | uniq -c | sed s/\ //g | tr "
+" "-" | tr A-Z a-z | sed s/-//g)
+	fi
+
 	if [ -z "$changes" ]; then
 		echo '';
 	else
@@ -73,6 +79,10 @@ $(git_escape .3 .3 .85 \\W)\
 ${GIT_PS1}\
 $(last_command_successful ${last_exit})\
 ]\$ "
+}
+
+function git_install_lg() {
+	git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 }
 
 export PROMPT_COMMAND=git_prompt
