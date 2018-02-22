@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Shows differences between sqlite data bases. Needs sqlite3.
+#
+# Please add a 
+#
+# > cat .gitattributes 
+# *.db diff=sql
+#
+# and some
+# 
+# > git config --global core.attributesfile '~/.gitattributes'
+# > git config --global diff.sql.command '~/bin/git-sqldiff'
+#
+
+for t in $(sqlite3 --header $2 '.tables'); do 
+	sqlite3 --header $2 'SELECT * FROM "'$t'";'; 
+done > /tmp/git-diff-sql-old
+
+
+for t in $(sqlite3 --header $1 '.tables'); do 
+	sqlite3 --header $1 'SELECT * FROM "'$t'";'; 
+done > /tmp/git-diff-sql-new
+
+diff -u --label a/$1 /tmp/git-diff-sql-old --label b/$1 /tmp/git-diff-sql-new || true
