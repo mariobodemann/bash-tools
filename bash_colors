@@ -88,4 +88,10 @@ function rainbowify_output()
 	echo -e "$($rainbow "$(echo -ne "${text}" | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
 }
 
+function random_cow() {
+	echo $(basename $(ls /usr/share/cowsay/*cow | sort -R | head -1) .cow)
+}
 
+function dad() {
+	rainbowify_output "$(cowsay -f $(random_cow) "$(curl -s -H "Accept: text/plain" https://icanhazdadjoke.com)")"
+}
