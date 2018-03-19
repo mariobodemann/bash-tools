@@ -89,7 +89,7 @@ function rainbowify_output()
 }
 
 function random_cow() {
-	echo $(basename $(ls /usr/share/cowsay/*cow | sort -R | head -1) .cow)
+	cowsay -l | grep -v ':' | tr ' ' '\n' | sort -R | head -1
 }
 
 function dad() {
