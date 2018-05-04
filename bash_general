@@ -25,6 +25,13 @@ if [ ! -e /proc/version ]; then
 	alias ls='ls -G -h'
 echo	
 	alias grep='grep --colour=auto'
-	alias xclip="xclip -selection c"
 fi
+alias xclip="xclip -selection c"
+
+function maze() {
+	m=(╱ ╲); 
+	while true; do 
+		echo -ne "${m[RANDOM % 2]}"; 
+	done
+}
 
