@@ -20,11 +20,11 @@ function git_blamer() {
 }
 
 function is_git() {
-        if git status -s 2>&1 | grep -qo 'Not a git repository'; then
-                echo 0;      
-        else 
-                echo 1;   
-        fi
+        if [ "$(git status >/dev/null 2>&1;echo $?)" == "0" ]; then 
+		echo 1; 
+	else 
+		echo 0; 
+	fi
 }
 
 function git_prompt_current_branch() {
