@@ -22,13 +22,6 @@ alias 🙋='echo '\''I am so happy'\'' | big_rainbow'
 
 alias xclip="xclip -selection c"
 
-if [ ! -e /proc/version ]; then
-	unalias ls
-	alias ls='ls -G -h'
-echo	
-	alias grep='grep --colour=auto'
-fi
-
 function maze() {
 	count=$1
 	shift
@@ -44,5 +37,5 @@ function amaze() {
 	if [ ! $x ]; then
 		x=40;
 	fi; 
-	maze | head -c$((x*x/2*4)) | grep --color=none -o ".\{$((x))\}"
+	maze | head -c$((x*x/2*4)) | grep -o ".\{$((x))\}"
 }
