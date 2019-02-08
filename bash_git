@@ -56,7 +56,7 @@ function last_command_successful() {
 		if [ "$(uname -a | grep -i android)" ]; then
 			git_escape 0.25 1 0 ' 📱';
 		else
-			git_escape 1 1 0 '🐧';
+			git_escape 1 1 0 ' 🏡';
 		fi;
 	else
 		git_escape 1 .5 0 '🔥';
@@ -71,11 +71,7 @@ function git_prompt() {
 		GIT_PS1='';
 	fi
 
-	export PS1="[\
-$(git_escape 1 .2 .2 \\u)\
-@\
-$(git_escape 0 .75 0 \\h) \
-$(git_escape .3 .3 .85 \\W)\
+	export PS1="[\[$(hsv 0 1 1)\]\\u\[$(bgr)\]@\[$(hsv 120 1 1)\]\\h \[$(hsv 240 .5 1)\]\\w\[$(bgr)\]\
 ${GIT_PS1}\
 $(last_command_successful ${last_exit})\
 ]\$ "

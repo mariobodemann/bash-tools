@@ -14,4 +14,7 @@ echo '*.gif diff=image
 ' >> ~/.gitattributes
 git config --global core.attributesfile '~/.gitattributes'
 git config --global diff.image.command '${BASH_TOOLS_HOME}/git-imgdiff'
-
+git config --global alias.st status
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+git config --global user.name "Mario Bodemann"
+git config --global user.email "mario.bodemann@gmail.com"
