@@ -6,7 +6,7 @@ if $(which termux > /dev/null 2>&1 ); then
 	alias xclip='termux-clipboard-set'
 fi
 
-alias ls='ls -h --color'
+alias ls='ls -h --color=if-tty'
 alias l='ls'
 alias ll='ls -l'
 alias lg='ls | grep'
