@@ -12,7 +12,7 @@ Style::Style()
 
 Style::Style(bool background, bool escape)
 	: background(background),
-	  escape(escape) {
+	  escape(escape){
 }
 
 float fclampf(float x, float minValue, float maxValue) {
@@ -48,7 +48,7 @@ int snprintrgbf(char* output, size_t length, float r, float g, float b, Style st
 	int colorCode = rgbTo256(rgb1to6(r), rgb1to6(g), rgb1to6(b));
 	int charsPrinted;
 	if (style.escape) {
-		charsPrinted = snprintf(sequence, MAX_CHARS, "\\[\\e[%02d;5;%dm\\]",  layer, colorCode);
+		charsPrinted = snprintf(sequence, MAX_CHARS, "\\[\\e[%02d;5;%dm\\]", layer, colorCode);
 	} else {
 		charsPrinted = snprintf(sequence, MAX_CHARS, "\\e[%02d;5;%dm", layer, colorCode);
 	}
@@ -61,6 +61,18 @@ int snprintrgbf(char* output, size_t length, float r, float g, float b, Style st
 
 	free(sequence);
 	return charsPrinted;
+}
+
+int printrgbf(float r, float g, float b, Style style) {
+	r = fclampf(r, 0, 1);
+	g = fclampf(g, 0, 1);
+	b = fclampf(b, 0, 1);
+
+	char layer = style.background ? 48 : 38;
+	int colorCode = rgbTo256(rgb1to6(r), rgb1to6(g), rgb1to6(b));
+	printf("\33[%02d;5;%dm", layer, colorCode);
+
+	return 1;
 }
 
 void printrgbend(Style style) {

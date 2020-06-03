@@ -17,6 +17,8 @@ int stringToFloat(char *string, float *result);
 
 int snprintrgbf(char* output, size_t length, float r, float g, float b, Style style);
 
+int printrgbf(float r, float g, float b, Style style);
+
 void printrgbend( Style style );
 
 int hsvToRgb(float h, float s, float v, float *r, float *g, float *b);

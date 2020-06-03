@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-
 #include "color_math.h"
 
 int rgb(char *r, char *g, char *b, Style style);
@@ -11,7 +10,7 @@ int hsv(char *h, char *s, char *v, Style style);
 int printRGB( float fr, float fg, float fb, Style style);
 void printHelp(const char *program);
 
-static Style DEFAULT(false, false);
+static Style FOREGROUND(false, false);
 static Style BACKGROUND(true, false);
 
 int main (int argc, char **argv) {
@@ -24,13 +23,13 @@ int main (int argc, char **argv) {
 			return rgb( argv[2], argv[3], argv[4], BACKGROUND );
 			break;
 		case 'R':
-			return rgb( argv[2], argv[3], argv[4], DEFAULT);
+			return rgb( argv[2], argv[3], argv[4], FOREGROUND);
 			break;
 		case 'h':
 			return hsv( argv[2], argv[3], argv[4], BACKGROUND );
 			break;
 		case 'H':
-			return hsv( argv[2], argv[3], argv[4], DEFAULT );
+			return hsv( argv[2], argv[3], argv[4], FOREGROUND );
 			break;
 		default:
 			printHelp(argv[0]);
@@ -47,7 +46,8 @@ void printHelp(const char *program) {
 		 "\tmean background.\n\n"
 		 "\tRGB values need to be in the range from 0.0 to 1.0\n"
 		 "\tand HSV values in 0.0 to 360.0 for h and 0.0 to 1.0\n"
-		 "\tfor s and v.\n", program);
+		 "\tfor s and v.\n"
+		 , program);
 }
 
 int rgb(char *r, char *g, char *b, Style style) {
@@ -81,7 +81,7 @@ int hsv(char *h, char *s, char *v, Style style) {
 }
 
 int printRGB( float fr, float fg, float fb, Style style) {
-	char *output = (char*) malloc(MAX_CHARS * sizeof(char));
+	char *output = (char*) calloc(MAX_CHARS, sizeof(char));
 	int chars = snprintrgbf(output, MAX_CHARS, fr, fg, fb, style);
 	if (chars > 0) {
 		printf("%s", output);
