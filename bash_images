@@ -176,3 +176,7 @@ function mosaic_doit() {
 
 	montage -background None -tile $SIZE -geometry ${TILE_SIZE}+0+0 @${OUTPUT}.list $OUTPUT
 }
+
+function image() {
+	${BASH_TOOLS_HOME}/image $@
+}
