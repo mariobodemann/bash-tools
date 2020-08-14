@@ -18,3 +18,10 @@ git config --global alias.st status
 git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 git config --global user.name "Mario Bodemann"
 git config --global user.email "mario.bodemann@gmail.com"
+
+
+if command -v termux-open; then
+	echo adding termux shortcuts
+
+	cp -fr shortcuts $HOME/.shortcuts
+fi
