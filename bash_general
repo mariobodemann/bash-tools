@@ -22,24 +22,6 @@ alias 🙋='echo '\''I am so happy'\'' | big_rainbow'
 
 alias xclip="xclip -selection c"
 
-function maze() {
-	count=$1
-	shift
-
-	m=(╱ ╲)
-	while true; do 
-		echo -ne "${m[RANDOM % 2]}"; 
-	done
-}
-
-function amaze() {
-	x=$1;
-	if [ ! $x ]; then
-		x=40;
-	fi; 
-	maze | head -c$((x*x/2*4)) | grep -o ".\{$((x))\}"
-}
-
 function gh_list() {
 	GH_REPO=$1
 	shift
