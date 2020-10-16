@@ -1,0 +1,8 @@
+#! /bin/bash
+
+if command -v kitty > /dev/null; then 
+        source <(kitty + complete setup bash)
+        alias icat="kitty +kitten icat"
+	alias 😻="rainbowify_output 'WE HAVE CATS!'"
+fi
+
