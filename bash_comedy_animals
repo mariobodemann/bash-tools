@@ -7,7 +7,7 @@ function comedy_animal() {
 	curl --silent $ANIMAL_URL --output /tmp/comedy_animal.jpg
 
 	if command -v kitty > /dev/null; then
-		icat --align=left /tmp/comedy_animal.jpg
+		kitty +kitten icat --align=left /tmp/comedy_animal.jpg
 	else
 		image /tmp/comedy_animal.jpg 10
 	fi
