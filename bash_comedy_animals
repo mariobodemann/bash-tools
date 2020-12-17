@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function comedy_animal() {
 	OUTPUT=/tmp/comedy_animal.jpg
 	if [ ! -e /tmp ]; then
