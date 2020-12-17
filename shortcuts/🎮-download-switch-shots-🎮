@@ -1,0 +1,27 @@
+#!/bin/bash
+
+OUTPUT_DIR="/tmp/switch/shots"
+if [ ! -e "${OUTPUT_DIR}" ]; then
+	OUTPUT_DIR="/sdcard/Download/switch/shots"
+fi
+mkdir -p $OUTPUT_DIR
+
+cd ${OUTPUT_DIR}
+
+STATE="$(termux-dialog confirm -i "Are you connected to the Switch?" -t "" | jq -r .text)"
+
+if [ "$STATE" = "no" ]; then
+	am start com.google.zxing.client.android/.CaptureActivity
+fi
+
+wget --timeout=1 --continue --tries=1 "http://192.168.0.1/data.json"
+
+CONSOLE=$(jq -r .ConsoleName data.json)
+echo .. connected to ${CONSOLE}
+
+wget $(jq -r .FileNames[] data.json | sed 's;^;192.168.0.1/img/;g')
+
+rm $OUTPUT_DIR/data.json
+
+read DONE
+
