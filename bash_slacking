@@ -1,0 +1,24 @@
+#!/bin/env bash
+
+function slack_emoji_font() {
+	MESSAGE=$1
+	shift
+
+	FONT=$1
+	shift
+	if [ -z ${FONT} ]; then
+		FONT=white
+	fi
+
+	echo $MESSAGE | grep -o . \
+		| sed 's/#/hash/g' \
+		| sed 's/?/question/g' \
+		| sed 's/!/exclamation/g' \
+		| sed 's/@/at/g' \
+		| sed 's/^/:alphabet-'${FONT}'-/g' \
+		| sed 's/$/:/g' \
+		| sed 's/:alphabet-'${FONT}'- :/ /g' \
+		| tr '\n' ' ' \
+		| sed 's/: :/::/g'
+}
+
