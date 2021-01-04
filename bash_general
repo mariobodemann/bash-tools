@@ -21,7 +21,7 @@ alias 🌍='google-chrome&'
 alias 🙋='echo '\''I am so happy'\'' | big_rainbow'
 
 alias xclip="xclip -selection c"
-alias cal='cal --monday'
+alias cal='cal --monday --week'
 
 function gh_list() {
 	GH_REPO=$1
