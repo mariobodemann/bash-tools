@@ -1,0 +1,12 @@
+function inspiro() {
+	OUTPUT=/tmp/${FUNCNAME}.png
+	URL="$(curl --silent 'https://inspirobot.me/api?generate=true')"
+	
+	curl --silent $URL --output $OUTPUT
+
+	if command -v kitty > /dev/null; then
+		kitty +kitten icat $OUTPUT
+	else
+		image $OUTPUT 10
+	fi
+}
