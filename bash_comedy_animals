@@ -5,7 +5,6 @@ function comedy_animal() {
 	if [ ! -e /tmp ]; then
 		OUTPUT="${HOME}/tmp/comedy"
 		mkdir -p $OUTPUT
-
 		OUTPUT="$OUTPUT/animal.jpg"
 	fi
 
@@ -15,8 +14,10 @@ function comedy_animal() {
 	echo $ANIMAL_URL
 	curl --silent $ANIMAL_URL --output "$OUTPUT"
 
+	mogrify -resize 512x512 "$OUTPUT"
+
 	if command -v kitty > /dev/null; then
-		kitty +kitten icat --align=left "$OUTPUT"
+		kitty +kitten icat "$OUTPUT"
 	else
 		image "$OUTPUT" 10
 	fi
