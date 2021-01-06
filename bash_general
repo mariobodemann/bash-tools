@@ -1,6 +1,12 @@
 export TERM=xterm-256color
 export GREP_COLOR=42
 
+export EDITOR=vim
+if ! command -v vim > /dev/null; then
+	echo 'no vim installed, please install vim'
+	EDITOR=vi	
+fi
+
 if $(which termux > /dev/null 2>&1 ); then 
 	alias display='termux-share -d'
 	alias xclip='termux-clipboard-set'
