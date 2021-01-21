@@ -1,0 +1,56 @@
+#!/bin/env bash
+
+FRAKTUR_LIGHT_CAPITAL="𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ"
+FRAKTUR_LIGHT_SMALL="𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷"
+FRAKTUR_BOLD_CAPITAL="𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅"
+FRAKTUR_BOLD_SMALL="𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟"
+
+function fraktur_alphabet() {
+	LIGHT=$1
+	shift
+	CAPITAL=$1
+	shift
+	
+	printf FRAKTUR_%s_%s ${LIGHT} ${CAPITAL}
+}
+
+function fraktur_code() {
+	printf '%d' "'$@'"
+}
+
+function fraktur() {
+	WORD=$1
+	shift
+	if [ -z "${WORD}" ]; then
+		WORD="Hello World"
+	fi
+
+	LIGHT=$1
+	shift
+	if [ -z "${LIGHT}" ]; then
+		LIGHT="LIGHT"
+	fi
+
+	for i in $(seq 0 ${#WORD}); do 
+		CAPITAL=""
+		INDEX=0
+
+		c=${WORD:i:1}
+
+		if [ $(fraktur_code $c) -ge $(fraktur_code "a") ] && [ $(fraktur_code $c) -le $(fraktur_code "z") ]; then 
+			INDEX=$(($(fraktur_code $c) - $(fraktur_code "a")))
+			CAPITAL="SMALL"
+		elif [ $(fraktur_code $c) -ge $(fraktur_code "A") ] && [ $(fraktur_code $c) -le $(fraktur_code "Z") ]; then
+			INDEX=$(($(fraktur_code $c) - $(fraktur_code "A")))
+			CAPITAL="CAPITAL"
+		else
+			echo -n "$c"
+			continue
+		fi
+		
+		ALPHA_FONT=($(fraktur_alphabet $LIGHT $CAPITAL))
+		ALPHA=${!ALPHA_FONT}
+		echo -n ${ALPHA:INDEX:1}
+	done
+}
+
