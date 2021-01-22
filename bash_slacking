@@ -1,10 +1,10 @@
 #!/bin/env bash
 
 function slack_emoji_font() {
-	MESSAGE=$1
+	local MESSAGE=$1
 	shift
 
-	FONT=$1
+	local FONT=$1
 	shift
 	if [ -z ${FONT} ]; then
 		FONT=white

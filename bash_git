@@ -1,17 +1,17 @@
 
 function git_guys() {
-	files="$(git status | grep 'modified:' | cut -d':' -f2 | grep -o '[^ ]*')"
+	local files="$(git status | grep 'modified:' | cut -d':' -f2 | grep -o '[^ ]*')"
 	git_blamer $files;
 }
 
 function git_blamer() {
-	files=$@
+	local files=$@
 	if [ "$(echo $files | wc -c)" -le "1" ]; then
 		echo "No changes detected"
 		return
 	fi
 
-	authors=''
+	local authors=''
 	for file in $files; do
 		authors="$authors $(git blame $file | cut -d'(' -f2 | cut -d')' -f1 | cut -d'2' -f1 | sed 's/\ \{2,\}//g' | sed 's/\ /#/g')"
 	done

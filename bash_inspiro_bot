@@ -1,6 +1,6 @@
 function inspiro() {
-	OUTPUT=/tmp/${FUNCNAME}.png
-	URL="$(curl --silent 'https://inspirobot.me/api?generate=true')"
+	local OUTPUT=/tmp/${FUNCNAME}.png
+	local URL="$(curl --silent 'https://inspirobot.me/api?generate=true')"
 	
 	curl --silent $URL --output $OUTPUT
 

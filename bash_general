@@ -4,7 +4,7 @@ export GREP_COLOR=42
 export EDITOR=vim
 if ! command -v vim > /dev/null; then
 	echo 'no vim installed, please install vim'
-	EDITOR=vi	
+	export EDITOR=vi
 fi
 
 if $(which termux > /dev/null 2>&1 ); then 
@@ -30,18 +30,18 @@ alias xclip="xclip -selection c"
 alias cal='cal --monday --week'
 
 function gh_list() {
-	GH_REPO=$1
+	local GH_REPO=$1
 	shift
 
-	if [ ! $GH_REPO ]; then
+	if [ -z $GH_REPO ]; then
 		GH_REPO=mariobodemann
 	fi
 
-	GH_LANG=$1
+	local GH_LANG=$1
 	shift
 
 	# MAGICK!
-	URL="https://github.com/${GH_REPO}?utf8=%E2%9C%93&q=&type=public&language=${GH_LANG}"
+	local URL="https://github.com/${GH_REPO}?utf8=%E2%9C%93&q=&type=public&language=${GH_LANG}"
 	echo -e "Clipping $URL.\n" >> /dev/stderr
 
 	curl --silent ${URL}"https://github.com/${GH_REPO}?utf8=%E2%9C%93&q=&type=public&language=${GH_LANG}" | grep -i codeRepository | cut -d'=' -f5 | cut -d '"' -f2 | sed 's\^\https://github.com\g'| tee /dev/stderr | xclip

@@ -30,12 +30,11 @@ function bgr() {
 	echo '\e[m'
 }
 
-function big()
-{
-	text=$1
+function big(){
+	local text=$1
 	shift
 
-	color=$1
+	local color=$1
 	shift
 
 	if [ -z "$color" ]; then
@@ -47,21 +46,21 @@ function big()
 	echo -e '\e[m'
 }
 
-function big_rainbow()
-{
-        text=$1
+function big_rainbow(){
+        local text=$1
 	shift
 
-	font=$1
+	local font=$1
 	shift
 
 	if [ -z "$font" ]; then
 		font=small
 	fi
 
-	bg=$1
+	local bg=$1
 	shift
 
+	local rainbow=""
 	if [ -z "$bg" ]; then
 		rainbow='rainbow';
 	else
@@ -71,12 +70,11 @@ function big_rainbow()
 	echo -e "$($rainbow "$(figlet -t -f $font $text | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
 }
 
-function rainbowify_output()
-{
-        text=$1
+function rainbowify_output(){
+        local text=$1
 	shift
 
-	bg=$1
+	local bg=$1
 	shift
 
 	if [ -z "$bg" ]; then

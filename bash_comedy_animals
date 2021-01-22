@@ -1,16 +1,16 @@
 #!/bin/bash
 
 function comedy_animal() {
-	OUTPUT=/tmp/comedy_animal.jpg
+	local OUTPUT=/tmp/comedy_animal.jpg
 	if [ ! -e /tmp ]; then
 		OUTPUT="${HOME}/tmp/comedy"
 		mkdir -p $OUTPUT
 		OUTPUT="$OUTPUT/animal.jpg"
 	fi
 
-	YEAR="$(seq 2015 1 2019 | sort --random-sort | head -1)"
-        ANIMALS="$(curl --silent -X POST -H 'Content-Type: application/json' -d '{"year":"'$YEAR'", "wrapAPIKey":"7UF1tvyFxs4TXQDYq4btuIIfIuHvbSdz"}' https://wrapapi.com/use/mariobodemann/comedy-wildlife/year/0.0.4 | jq -r .[].url)"
-        ANIMAL_URL="$(echo $ANIMALS | grep -o '[^ ]*' | sort --random-sort | head -1)"
+	local YEAR="$(seq 2015 1 2019 | sort --random-sort | head -1)"
+        local ANIMALS="$(curl --silent -X POST -H 'Content-Type: application/json' -d '{"year":"'$YEAR'", "wrapAPIKey":"7UF1tvyFxs4TXQDYq4btuIIfIuHvbSdz"}' https://wrapapi.com/use/mariobodemann/comedy-wildlife/year/0.0.4 | jq -r .[].url)"
+        local ANIMAL_URL="$(echo $ANIMALS | grep -o '[^ ]*' | sort --random-sort | head -1)"
 	echo $ANIMAL_URL
 	curl --silent $ANIMAL_URL --output "$OUTPUT"
 
