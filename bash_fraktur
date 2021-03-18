@@ -3,6 +3,7 @@
 FRAKTUR_FONT_START=""
 FRAKTUR_FONT_END=""
 FRAKTUR_FONT_START="$(compgen -v)"
+FRAKTUR_FONT_DEFAULT_DEFAULT="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 FRAKTUR_FONT_BORDER_DEFAULT="𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫"
 FRAKTUR_FONT_CESAR_DEFAULT="AMWOEZKFYBVXPQCGDLJRITNUHSbfnzuymvokwaecxjghrtqpisld"
 FRAKTUR_FONT_CIRCLE_DEFAULT="ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ"
@@ -18,6 +19,23 @@ FRAKTUR_FONT_END="$(compgen -v)"
 
 FRAKTUR_FONTS=$(echo $FRAKTUR_FONT_START $FRAKTUR_FONT_END | tr ' ' '\n' | sort | uniq -u)
 
+function fraktur_all() {
+	local MESSAGE="$1"
+	shift
+	if [ -z "$MESSAGE" ]; then
+		MESSAGE="ABCDEFG abcdefg"
+	fi
+
+	local FONT
+	for FONT in ${FRAKTUR_FONTS}; do
+		local ALPHA=${!FONT}
+		local WORD=$(fraktur_word $ALPHA $MESSAGE)
+
+		echo -n "${WORD} ("
+		echo "${FONT})" | cut -d'_' -f3-
+	done
+}
+
 function fraktur_alphabet() {
 	local FONT=$1
 	shift
@@ -27,17 +45,39 @@ function fraktur_alphabet() {
 	printf FRAKTUR_FONT_%s_%s ${FONT} ${STYLE}
 }
 
-function fraktur_list_fonts() {
-	local FONT
-	for FONT in ${FRAKTUR_FONTS}; do
-		local ALPHA=${!FONT}
-
-		printf "%s: %s\n" "$(echo $FONT | cut -d '_' -f3-4 | sed 's/_/ /g')" "${ALPHA:0:10}"
-	done
-}
 
 function fraktur_code() {
 	printf '%d' "'$@'"
+}
+
+function fraktur_word() {
+	local ALPHA=$1
+	shift
+	local WORD="$@"
+	shift
+	local i=0
+
+	for i in $(seq 0 ${#WORD}); do
+		local c=${WORD:i:1}
+		local INDEX=0
+
+		if [ $(fraktur_code $c) -ge $(fraktur_code "a") ] && [ $(fraktur_code $c) -le $(fraktur_code "z") ]; then
+			INDEX=$((26 + $(fraktur_code $c) - $(fraktur_code "a")))
+		elif [ $(fraktur_code $c) -ge $(fraktur_code "A") ] && [ $(fraktur_code $c) -le $(fraktur_code "Z") ]; then
+			INDEX=$(($(fraktur_code $c) - $(fraktur_code "A")))
+		else
+			echo -n "$c"
+			continue
+		fi
+
+		if [ ! -z "${FRAKTUR_DEBUG}" ]; then
+			echo "Index: $INDEX"
+			echo "Font: $ALPHA_FONT"
+			echo "Alpha: $ALPHA"
+		fi
+
+		echo -n ${ALPHA:INDEX:1}
+	done
 }
 
 function fraktur() {
@@ -66,28 +106,7 @@ function fraktur() {
 		return -1
 	fi
 
-	local i=0
-	for i in $(seq 0 ${#WORD}); do 
-		local INDEX=0
-
-		local c=${WORD:i:1}
-
-		if [ $(fraktur_code $c) -ge $(fraktur_code "a") ] && [ $(fraktur_code $c) -le $(fraktur_code "z") ]; then 
-			INDEX=$((26 + $(fraktur_code $c) - $(fraktur_code "a")))
-		elif [ $(fraktur_code $c) -ge $(fraktur_code "A") ] && [ $(fraktur_code $c) -le $(fraktur_code "Z") ]; then
-			INDEX=$(($(fraktur_code $c) - $(fraktur_code "A")))
-		else
-			echo -n "$c"
-			continue
-		fi
-
-		if [ ! -z "${FRAKTUR_DEBUG}" ]; then
-			echo "Index: $INDEX"
-			echo "Font: $ALPHA_FONT"
-		        echo "Alpha: $ALPHA"
-		fi	       
-	
-		echo -n ${ALPHA:INDEX:1}
-	done
+	fraktur_word "$ALPHA" "$WORD"
+	echo
 }
 
