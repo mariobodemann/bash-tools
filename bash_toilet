@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function toilet_all() {
+
+	
+	local f=""
+	for f in /usr/share/figlet/*; do 
+		font=$(basename $f | cut -d'.' -f1 )
+		echo $font
+		if [ ! -z "$@" ]; then
+			toilet --font $font --termwidth "$@"
+		else
+			toilet --font $font --termwidth $font
+		fi
+		echo
+	done
+}
