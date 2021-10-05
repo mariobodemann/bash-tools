@@ -9,13 +9,6 @@ function comedy_animal() {
                 YEAR="$(curl --silent -X POST -d 'wrapAPIKey=7UF1tvyFxs4TXQDYq4btuIIfIuHvbSdz' https://wrapapi.com/use/mariobodemann/comedy-wildlife/list/0.0.1 | jq -r .[].url | grep $YEAR| sort --random-sort | head -1)"
 	fi
 
-	local SIZE=$1
-	shift
-	if [ -z "$SIZE" ]; then
-	        SIZE="10"
-	fi
-
-
 	local OUTPUT=/tmp/comedy_animal.jpg
 	if [ ! -e /tmp ]; then
 		OUTPUT="${HOME}/tmp/comedy"
@@ -28,10 +21,8 @@ function comedy_animal() {
 	echo $ANIMAL_URL
 	curl --silent $ANIMAL_URL --output "$OUTPUT"
 
-	mogrify -resize 512x512 "$OUTPUT"
-
-	if command -v image > /dev/null; then
-		image "$OUTPUT" "$SIZE"
+	if command -v chafa > /dev/null; then
+		chafa --size 128x128 $OUTPUT
         else
 		display "$OUTPUT"
 	fi

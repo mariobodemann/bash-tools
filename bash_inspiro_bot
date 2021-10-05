@@ -4,8 +4,8 @@ function inspiro() {
 	
 	curl --silent $URL --output $OUTPUT
 
-	if command -v kitty > /dev/null; then
-		kitty +kitten icat $OUTPUT
+	if command -v chafa > /dev/null; then
+		chafa $OUTPUT
 	else
 		image $OUTPUT 10
 	fi
