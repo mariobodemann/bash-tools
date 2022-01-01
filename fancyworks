@@ -75,24 +75,15 @@ def draw_screen(particles):
             print('\033[%d;%dH' % (height-int(p.y), 1+int(p.x)) + p.to_char(), end='', flush=True)
 
 
-
-colors = [
-]
-
-for i in range(0, 256):
-    colors.append(
-            "38;5;%d" % i
-            )
-
 particles = []
 
 for i in range(0, particle_count):
-    x = width / 2 + randint(-5, 5)
+    x = width / 2 + randint(-25, 25) * 100 / width
     y = 0
     angle = randint(-60, 60)
     scale = (0.4 + random() * 0.6) * 2
-    color = colors[randint(0, len(colors)-1)]
-    lives = 400
+    color = "38;5;%d" % randint(0,256)
+    lives = 200
     sleeping = randint(0, 75)
     particles.append(
             Particle(x,y,angle,scale,color,lives,sleeping)
