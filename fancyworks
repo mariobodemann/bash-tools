@@ -1,0 +1,115 @@
+#!/bin/env python
+
+from math import radians, degrees, sin, cos, atan2
+from random import random, randint
+from time import sleep
+
+from os import get_terminal_size
+
+delay = 1 / 25.0
+gravity = 0.08
+particle_count = 64
+
+width=get_terminal_size().columns-1
+height=get_terminal_size().lines
+
+class Particle():
+    angle_asciis = [ '→', '↗', '↑', '↖', '←', '↙', '↓', '↘',]
+    
+    def __init__(self, x, y, angle, strength, color, lives, sleeping):
+        self.x = x
+        self.y = y
+        self.dir_x = sin(radians(angle)) * strength
+        self.dir_y = cos(radians(angle)) * strength
+        self.color = color
+        self.lives = lives
+        self.sleeping = sleeping
+
+    def is_alive(self):
+        return self.lives > 0
+
+    def step(self):
+        if not self.is_alive():
+            return
+
+        if self.sleeping > 0:
+            self.sleeping -= 1
+            return
+
+        self.x += self.dir_x
+        self.y += self.dir_y
+        
+        self.dir_y -= gravity
+       
+        if self.y < 0:
+            self.lives = 0
+        else:
+            self.lives -= 1
+
+    def angle(self):
+        return atan2(self.dir_y, self.dir_x)
+
+    def to_color_char(self):
+        return '\033[%sm' % self.color
+
+    def to_color_end(self):
+        return '\033[m'
+
+    def to_char(self):
+        if self.sleeping > 0:
+            return ' '
+
+        if not self.is_alive():
+            return self.to_color_char() + '-' + self.to_color_end()
+
+        if self.dir_y < -0.4:
+            return self.to_color_char() + '█' + self.to_color_end()
+
+        index = int(degrees(self.angle()) * len(Particle.angle_asciis) / 360.0)
+        return self.to_color_char() + Particle.angle_asciis[index] + self.to_color_end()
+
+
+def draw_screen(particles):
+    for p in particles:
+        if int(p.x) in range(0, width) and int(p.y) in range(0,height):
+            print('\033[%d;%dH' % (height-int(p.y), 1+int(p.x)) + p.to_char(), end='', flush=True)
+
+
+
+colors = [
+]
+
+for i in range(0, 256):
+    colors.append(
+            "38;5;%d" % i
+            )
+
+particles = []
+
+for i in range(0, particle_count):
+    x = width / 2 + randint(-5, 5)
+    y = 0
+    angle = randint(-60, 60)
+    scale = (0.4 + random() * 0.6) * 2
+    color = colors[randint(0, len(colors)-1)]
+    lives = 400
+    sleeping = randint(0, 75)
+    particles.append(
+            Particle(x,y,angle,scale,color,lives,sleeping)
+   )
+    
+
+print('\033[2J') # clear screen
+running=True
+while(running):
+    draw_screen(particles)
+
+    for p in particles:
+        p.step()
+
+    if len(list(filter(lambda p: p.is_alive(), particles))) == 0:
+        running = False
+
+    sleep(delay)
+
+print('\033[6;1m !! Happy 2022 !! \033[m')
