@@ -1,4 +1,5 @@
 alias parrotify=$BASH_TOOLS_HOME/parrotify
 alias extract-images-from-collages=$BASH_TOOLS_HOME/extract-images-from-collages
 alias extract-faces-from-images=$BASH_TOOLS_HOME/extract-faces-from-images
+alias fancyworks=$BASH_TOOLS_HOME/fancyworks
 
