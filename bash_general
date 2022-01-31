@@ -12,7 +12,7 @@ if $(which termux > /dev/null 2>&1 ); then
 	alias xclip='termux-clipboard-set'
 fi
 
-alias ls='ls -h --color=if-tty'
+alias ls='ls -h --color'
 alias l='ls'
 alias ll='ls -l'
 alias lg='ls | grep'
@@ -20,7 +20,7 @@ alias llg='ll | grep'
 alias la='ls -a'
 alias lla='ll -a'
 alias llag='lla | grep'
-
+alias grep='grep --color'
 alias 🏡='cd'
 alias 🤖='adb'
 alias 🌍='google-chrome&'

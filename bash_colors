@@ -2,7 +2,7 @@ function hsv() {
 	${BASH_TOOLS_HOME}/color H $1 $2 $3
 }
 
-function hsv-bg() {
+function hsv_bg() {
 	${BASH_TOOLS_HOME}/color h $1 $2 $3
 }
 
@@ -14,7 +14,7 @@ function rainbow() {
 	${BASH_TOOLS_HOME}/rainbow $@
 }
 
-function rainbow-bg() {
+function rainbow_bg() {
 	rainbow -bg -- $@
 }
 
@@ -22,7 +22,7 @@ function rgb() {
 	${BASH_TOOLS_HOME}/color R $1 $2 $3
 }
 
-function rgb-bg() {
+function rgb_bg() {
 	${BASH_TOOLS_HOME}/color r $1 $2 $3
 }
 
@@ -64,7 +64,7 @@ function big_rainbow(){
 	if [ -z "$bg" ]; then
 		rainbow='rainbow';
 	else
-		rainbow='rainbow-bg';
+		rainbow='rainbow_bg';
 	fi
 
 	echo -e "$($rainbow "$(figlet -t -f $font $text | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '
@@ -80,7 +80,7 @@ function rainbowify_output(){
 	if [ -z "$bg" ]; then
 		rainbow='rainbow';
 	else
-		rainbow='rainbow-bg';
+		rainbow='rainbow_bg';
 	fi
 
 	echo -e "$($rainbow "$(echo -ne "${text}" | sed 's#\\#|#g' | tr '\n' '😉' | tr ' ' '#')")" | tr '😉' '\n' | tr '#' ' '

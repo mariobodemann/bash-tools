@@ -53,7 +53,7 @@ function svg_to_ic() {
 	done
 }
 
-function video-to-gif() {
+function video_to_gif() {
 	local input=${1}
 	shift
 
