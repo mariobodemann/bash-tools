@@ -1,0 +1,108 @@
+export TERM=xterm-256color
+export GREP_COLOR=42
+
+export EDITOR=vim
+
+alias ls='ls -h --color'
+alias l='ls'
+alias ll='ls -l'
+alias lg='ls | grep'
+alias llg='ll | grep'
+alias la='ls -a'
+alias lla='ll -a'
+alias llag='lla | grep'
+alias grep='grep --color'
+alias 🏡='cd'
+alias cal='cal --monday --week'
+
+zmodload zsh/nearcolor
+
+function is_git() {
+        if [[ "$(git status >/dev/null 2>&1;echo $?)" == "0" ]]; then 
+		echo 1; 
+	else 
+		echo 0; 
+	fi
+}
+
+function git_prompt_current_branch() {
+	git branch | grep \* | cut -d' ' -f2-
+}
+
+function git_prompt_changes() {
+	local changes=$(git status -s | sed 's/^\ //g' | cut -d' ' -f1 | sort | uniq -c | tr '\n' ' ' | sed 's/\ //g')
+
+	if [ -z "$changes" ]; then
+		echo '';
+	else
+		echo "($changes)"
+	fi
+}
+
+function rainbow_color() {
+	hue="$1"
+	(( section = hue / 16 ))
+
+	echo -n "$hue = " >> /tmp/foo
+	echo -n "$section and " >> /tmp/foo
+
+	case $section in
+	0)      ((r = 15))
+		((g = hue % 16))
+		((b = 0))
+	;;
+	1)      ((r = 15 - hue % 16))
+		((g = 15))
+		((b = 0))
+	;;
+	2)      ((r = 0))
+		((g = 15))
+		((b = hue % 16))
+	;;
+	3)      ((r = 0))
+		((g = 15 - hue % 16))
+		((b = 15))
+	;;
+	4)      ((r = hue % 16))
+		((g = 0))
+		((b = 15))
+	;;
+	*)      ((r = 15))
+		((g = 0))
+		((b = 15 - hue % 16))
+	;;
+	esac;
+
+	((r = r * 16))
+	((g = g * 16))
+	((b = b * 16))
+
+	echo $r $g $b >> /tmp/foo
+	printf "#%02X%02X%02X" $r $g $b
+}
+
+function rainbowz() {
+	local text="$1"
+	local len=${#text}
+	local i
+
+	for i in $(seq 0 $len); do
+		(( x = i * 100 / len ))
+		local color="$(rainbow_color $x)"
+		echo -n "%{%F{$color}%}${text[$i+1]}"
+	done
+	echo -n "%{%f%}"
+}
+
+function git_prompt() {
+        if [[ $(is_git) -eq 1 ]]; then 
+		GIT_PS1="#$(git_prompt_current_branch)$(git_prompt_changes)";
+		GIT_PS1=$(rainbowz "$GIT_PS1 ")
+	else 
+		GIT_PS1='';
+	fi
+
+	export PS1="[%{%F{#0ff}%}%n%{%f%}@%{%F{#f0f}%}%m%{%f%}] %1~ $GIT_PS1%(?.🤓.😢)%# "
+}
+
+precmd() { git_prompt }
