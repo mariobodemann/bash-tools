@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 #
 # Find images in a collage, rectify them, and extract them to separate files.
 #
