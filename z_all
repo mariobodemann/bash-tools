@@ -95,7 +95,7 @@ function rainbowz() {
 }
 
 function git_prompt() {
-        if [[ $(is_git) -eq 1 ]]; then 
+	if [[ $(is_git) -eq 1 ]]; then 
 		GIT_PS1="#$(git_prompt_current_branch)$(git_prompt_changes)";
 		GIT_PS1=$(rainbowz "$GIT_PS1 ")
 	else 
