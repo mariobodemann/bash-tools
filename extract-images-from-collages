@@ -24,10 +24,12 @@ class Configuration:
         self.output_folder="."
         self.output_extension="png"
         self.expected_subimage_count=0
+        self.extract_all=False
         self.border=10
         self.blur_radius=11
         self.threshold=240
-        self.output_debug_images=False
+        self.min_area=10
+        self.debug=False
 
     def parse(self):
         parser = argparse.ArgumentParser(description='Extract images from a collaged image.')
@@ -36,10 +38,12 @@ class Configuration:
         parser.add_argument('-o', '--output', nargs='?', default=self.output_folder, help='Where should the subimages of the collage be stored?')
         parser.add_argument('-O', '--output_extension', nargs='?', default=self.output_extension, help='Set the extension of all the output files.')
         parser.add_argument('-e', '--expected_finds', nargs='?', type=int, default=self.expected_subimage_count, help='If set to something bigger then zero, highlight when less images are extracted.')
+        parser.add_argument('-m', '--min_area', nargs='?', type=int, default=self.min_area, help='Min area in pixel to be extracted.')
+        parser.add_argument('-E', '--extract_all', action='store_true', default=self.extract_all, help='Extract all subimages, no matter the size.')
         parser.add_argument('-b', '--border', nargs='?', type=int, default=self.border, help='How big of a border do you want arround every collage?')
         parser.add_argument('-B', '--blur_radius', nargs='?', type=int, default=self.blur_radius, help='Increase the blur radius of the input collage.')
         parser.add_argument('-t', '--threshold', nargs='?', type=int, default=self.threshold, help='above which white value should we considere it white?')
-        parser.add_argument('-d', '--debug_finds', action='store_true', default=self.output_debug_images, help='If used, this will extract the found images in a special files in the output folder.')
+        parser.add_argument('-d', '--debug', action='store_true', default=self.debug, help='If used, this will extract the found images in a special files in the output folder.')
 
         args = parser.parse_args()
 
@@ -57,6 +61,10 @@ class Configuration:
 
         self.expected_subimage_count = args.expected_finds
 
+        self.extract_all = args.extract_all
+
+        self.min_area = args.min_area
+
         self.border = args.border
         
         self.blur_radius = args.blur_radius
@@ -65,7 +73,7 @@ class Configuration:
 
         self.threshold = args.threshold
 
-        self.output_debug_images = args.debug_finds
+        self.debug= args.debug
 
         return self
     
@@ -74,6 +82,9 @@ class Configuration:
 # Do the thing™
 #
 def extract(conf):
+    if conf.debug:
+        print(vars(conf))
+
     missing = []
     for file in sorted(os.listdir(conf.input_folder)):
         print('Checking file "%s".' % file)
@@ -106,7 +117,7 @@ def extract(conf):
                 box = numpy.int0(box)
 
                 contArea = cv2.contourArea(box) 
-                if contArea > area / 10 and contArea < area * 2 / 3:
+                if conf.extract_all or contArea > conf.min_area or (contArea > area / 10 and contArea < area * 2 / 3):
                     cv2.drawContours(img_found,[box],0,(0,0,255),2)
                     
                     # extract perspective correct images
@@ -123,7 +134,7 @@ def extract(conf):
                     cv2.imwrite('%s/%s.%04d.%s' %(conf.output_folder, file[:-(len(conf.input_extension)+1)], images_found, conf.output_extension), warped)
                     images_found += 1
 
-            if conf.output_debug_images: 
+            if conf.debug: 
                 cv2.imwrite('%s/%s.threshold.%s' %(conf.output_folder, file[:-(len(conf.input_extension)+1)], conf.output_extension), thresh)
                 cv2.imwrite('%s/%s.found.%s' %(conf.output_folder, file[:-(len(conf.input_extension)+1)], conf.output_extension), img_found)
 
