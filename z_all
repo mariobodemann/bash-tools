@@ -12,8 +12,10 @@ alias la='ls -a'
 alias lla='ll -a'
 alias llag='lla | grep'
 alias grep='grep --color'
-alias 🏡='cd'
-alias cal='cal --monday --week'
+alias hexedit='hexedit --color'
+alias dbox='dosbox -c dosbox.conf'
+
+export PATH=$PATH:~/Projects/bash-tools
 
 zmodload zsh/nearcolor
 
