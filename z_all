@@ -17,6 +17,8 @@ alias dbox='dosbox -c dosbox.conf'
 
 export PATH=$PATH:~/Projects/bash-tools
 
+bindkey '^R' history-incremental-pattern-search-backward
+
 zmodload zsh/nearcolor
 
 function is_git() {
