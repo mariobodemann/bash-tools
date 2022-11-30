@@ -47,9 +47,6 @@ function rainbow_color() {
 	hue="$1"
 	(( section = hue / 16 ))
 
-	echo -n "$hue = " >> /tmp/foo
-	echo -n "$section and " >> /tmp/foo
-
 	case $section in
 	0)      ((r = 15))
 		((g = hue % 16))
@@ -81,7 +78,6 @@ function rainbow_color() {
 	((g = g * 16))
 	((b = b * 16))
 
-	echo $r $g $b >> /tmp/foo
 	printf "#%02X%02X%02X" $r $g $b
 }
 
