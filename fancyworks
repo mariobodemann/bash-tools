@@ -103,4 +103,4 @@ while(running):
 
     sleep(delay)
 
-print('\033[6;1m !! Happy 2022 !! \033[m')
+print('\033[6;1m !! Happy 2023 !! \033[m')
