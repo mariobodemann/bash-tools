@@ -1,78 +1,117 @@
 #!/usr/bin/env python3
 
+
+W = ":alphabet-white-"
+Y = ":alphabet-yellow-"
+
 fonts = {
-	'none':"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ",
-	'border':"𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡 ",
-	'bold':"𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗 ",
-	'bold-sans':"𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵 ",
-	'bold-italic':"𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗 ",
-	'ceasar':"AMWOEZKFYBVXPQCGDLJRITNUHSbfnzuymvokwaecxjghrtqpisld321465897 ",
-	'circle':"ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ0123456789 ",
-	'circle-bold':"🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩0123456789 ",
-	'double':"𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡 ",
-	'fraktur':"𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789 ",
-	'fraktur-bold':"𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗 ",
-	'fraktur':"𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789 ",
-	'italic':"𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789 ",
-	'italic-sans':"𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789 ",
-	'mono':"𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿 ",
-	'rect':"🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿 ",
-	'rect-bold':"🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉0123456789 ",
-	'script':"𝒜𝐵𝒞𝒟𝐸𝐹𝒢𝐻𝐼𝒥𝒦𝐿𝑀𝒩𝒪𝒫𝒬𝑅𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫 ",
-	'script-bold':"𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝓌𝓍𝓎𝓏𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫 ",
-	'small-caps':"ABCDEFGHIJKLMNOPQRSTUVWXYZᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫 ",
-	'zensored':"███████████████████████████████████████████████████████████████",
-	'slack':[
-		":alphabet-white-a:", ":alphabet-white-b:", ":alphabet-white-c:", ":alphabet-white-d:", ":alphabet-white-e:", ":alphabet-white-f:", ":alphabet-white-g:", ":alphabet-white-h:", ":alphabet-white-i:", ":alphabet-white-j:", ":alphabet-white-k:", ":alphabet-white-l:", ":alphabet-white-m:", ":alphabet-white-n:", ":alphabet-white-o:", ":alphabet-white-p:", ":alphabet-white-q:", ":alphabet-white-r:", ":alphabet-white-s:", ":alphabet-white-t:", ":alphabet-white-u:", ":alphabet-white-v:", ":alphabet-white-w:", ":alphabet-white-x:", ":alphabet-white-y:", ":alphabet-white-z:",
-		":alphabet-white-a:", ":alphabet-white-b:", ":alphabet-white-c:", ":alphabet-white-d:", ":alphabet-white-e:", ":alphabet-white-f:", ":alphabet-white-g:", ":alphabet-white-h:", ":alphabet-white-i:", ":alphabet-white-j:", ":alphabet-white-k:", ":alphabet-white-l:", ":alphabet-white-m:", ":alphabet-white-n:", ":alphabet-white-o:", ":alphabet-white-p:", ":alphabet-white-q:", ":alphabet-white-r:", ":alphabet-white-s:", ":alphabet-white-t:", ":alphabet-white-u:", ":alphabet-white-v:", ":alphabet-white-w:", ":alphabet-white-x:", ":alphabet-white-y:", ":alphabet-white-z:",
-		":zero:", ":one:", ":two:", ":three:", ":four:", ":five:", ":six:", ":seven:", ":eight:", ":nine:",
-		"   ",
-	],
-	'slack-yellow':[
-		":alphabet-yellow-a:", ":alphabet-yellow-b:", ":alphabet-yellow-c:", ":alphabet-yellow-d:", ":alphabet-yellow-e:", ":alphabet-yellow-f:", ":alphabet-yellow-g:", ":alphabet-yellow-h:", ":alphabet-yellow-i:", ":alphabet-yellow-j:", ":alphabet-yellow-k:", ":alphabet-yellow-l:", ":alphabet-yellow-m:", ":alphabet-yellow-n:", ":alphabet-yellow-o:", ":alphabet-yellow-p:", ":alphabet-yellow-q:", ":alphabet-yellow-r:", ":alphabet-yellow-s:", ":alphabet-yellow-t:", ":alphabet-yellow-u:", ":alphabet-yellow-v:", ":alphabet-yellow-w:", ":alphabet-yellow-x:", ":alphabet-yellow-y:", ":alphabet-yellow-z:",
-		":alphabet-yellow-a:", ":alphabet-yellow-b:", ":alphabet-yellow-c:", ":alphabet-yellow-d:", ":alphabet-yellow-e:", ":alphabet-yellow-f:", ":alphabet-yellow-g:", ":alphabet-yellow-h:", ":alphabet-yellow-i:", ":alphabet-yellow-j:", ":alphabet-yellow-k:", ":alphabet-yellow-l:", ":alphabet-yellow-m:", ":alphabet-yellow-n:", ":alphabet-yellow-o:", ":alphabet-yellow-p:", ":alphabet-yellow-q:", ":alphabet-yellow-r:", ":alphabet-yellow-s:", ":alphabet-yellow-t:", ":alphabet-yellow-u:", ":alphabet-yellow-v:", ":alphabet-yellow-w:", ":alphabet-yellow-x:", ":alphabet-yellow-y:", ":alphabet-yellow-z:",
-		":zero:", ":one:", ":two:", ":three:", ":four:", ":five:", ":six:", ":seven:", ":eight:", ":nine:",
-		"   ",
-	],
+    'none': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ",
+    'border': "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡 ",
+    'bold': "𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗 ",
+    'bold-sans': "𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵 ",
+    'bold-italic': "𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗 ",
+    'ceasar': "AMWOEZKFYBVXPQCGDLJRITNUHSbfnzuymvokwaecxjghrtqpisld321465897 ",
+    'circle': "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ0123456789 ",
+    'circle-bold': "🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩0123456789 ",
+    'double': "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡 ",
+    'fraktur': "𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷0123456789 ",
+    'fraktur-bold': "𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗 ",
+    'italic': "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789 ",
+    'italic-sans': "𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻0123456789 ",
+    'mono': "𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿 ",
+    'rect': "🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿 ",
+    'rect-bold': "🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉0123456789 ",
+    'script': "𝒜𝐵𝒞𝒟𝐸𝐹𝒢𝐻𝐼𝒥𝒦𝐿𝑀𝒩𝒪𝒫𝒬𝑅𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹𝑒𝒻𝑔𝒽𝒾𝒿𝓀𝓁𝓂𝓃𝑜𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫 ",
+    'script-bold': "𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝓌𝓍𝓎𝓏𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫 ",
+    'small-caps': "ABCDEFGHIJKLMNOPQRSTUVWXYZᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫 ",
+    'censored': "███████████████████████████████████████████████████████████████",
+    'slack': [
+        f"{W}a:", f"{W}b:", f"{W}c:", f"{W}d:", f"{W}e:", f"{W}f:", f"{W}g:", f"{W}h:", f"{W}i:", f"{W}j:",
+        f"{W}k:", f"{W}l:", f"{W}m:", f"{W}n:", f"{W}o:", f"{W}p:", f"{W}q:", f"{W}r:", f"{W}s:", f"{W}t:",
+        f"{W}u:", f"{W}v:", f"{W}w:", f"{W}x:", f"{W}y:", f"{W}z:", f"{W}a:", f"{W}b:", f"{W}c:", f"{W}d:",
+        f"{W}e:", f"{W}f:", f"{W}g:", f"{W}h:", f"{W}i:", f"{W}j:", f"{W}k:", f"{W}l:", f"{W}m:", f"{W}n:",
+        f"{W}o:", f"{W}p:", f"{W}q:", f"{W}r:", f"{W}s:", f"{W}t:", f"{W}u:", f"{W}v:", f"{W}w:", f"{W}x:",
+        f"{W}y:", f"{W}z:",
+        ":zero:", ":one:", ":two:", ":three:", ":four:", ":five:", ":six:", ":seven:", ":eight:", ":nine:",
+        "   ",
+    ],
+    'slack-yellow': [
+        f"{Y}a:", f"{Y}b:", f"{Y}c:", f"{Y}d:", f"{Y}e:", f"{Y}f:", f"{Y}g:", f"{Y}h:", f"{Y}i:", f"{Y}j:", f"{Y}k:",
+        f"{Y}l:", f"{Y}m:", f"{Y}n:", f"{Y}o:", f"{Y}p:", f"{Y}q:", f"{Y}r:", f"{Y}s:", f"{Y}t:", f"{Y}u:", f"{Y}v:",
+        f"{Y}w:", f"{Y}x:", f"{Y}y:", f"{Y}z:", f"{Y}a:", f"{Y}b:", f"{Y}c:", f"{Y}d:", f"{Y}e:", f"{Y}f:", f"{Y}g:",
+        f"{Y}h:", f"{Y}i:", f"{Y}j:", f"{Y}k:", f"{Y}l:", f"{Y}m:", f"{Y}n:", f"{Y}o:", f"{Y}p:", f"{Y}q:", f"{Y}r:",
+        f"{Y}s:", f"{Y}t:", f"{Y}u:", f"{Y}v:", f"{Y}w:", f"{Y}x:", f"{Y}y:", f"{Y}z:",
+        ":zero:", ":one:", ":two:", ":three:", ":four:", ":five:", ":six:", ":seven:", ":eight:", ":nine:",
+        "   ",
+    ],
 }
 
 
 def fraktur(message='abcdefg ABCDEFG', font='fraktur'):
-	out=''
-	if font in fonts:
-		for c in message:
-			if c.isalpha():
-				if c.isupper():
-					index = ord(c) - ord('A')
-				else:
-					index = ord(c) - ord('a') + 26
-	
-				out += fonts[font][index]
-			elif c.isdigit():
-				out += fonts[font][-(1+10-int(c))]
-			elif c.isspace():
-				out += fonts[font][-1]
-			else:
-				out += c
-	else:
-		print("Font '%s' not found." % font)
+    out = ''
+    if font in fonts:
+        for c in message:
+            if c.isalpha():
+                if c.isupper():
+                    index = ord(c) - ord('A')
+                else:
+                    index = ord(c) - ord('a') + 26
 
-	return out
+                out += fonts[font][index]
+            elif c.isdigit():
+                out += fonts[font][-(1 + 10 - int(c))]
+            elif c.isspace():
+                out += fonts[font][-1]
+            else:
+                out += c
+    else:
+        print(f"Font '{font}' not found.")
 
-def fraktur_all(message='abcdefg ABCDEFG'):
-	for font in sorted(list(fonts.keys())):
-		print('%s: %s' % (font, fraktur(message,font)))
-
-import sys
-
-if len(sys.argv) == 2:
-	print(fraktur(sys.argv[1]))
-elif len(sys.argv) == 3:
-	if sys.argv[2] == 'all':
-		fraktur_all(sys.argv[1])
-	else:
-		print(fraktur(sys.argv[1], sys.argv[2]))
-else:
-	print("Usage: %s MESSAGE FONT\n\nMESSAGE: Some text\nFONT: one of %s or 'all'.\n" % (sys.argv[0], str(sorted(list(fonts.keys())))))
+    return out
 
 
+def fraktur_all(message='abcdefg ABCDEFG', fraktur_only=False):
+    for font in sorted(list(fonts.keys())):
+        if fraktur_only:
+            print(fraktur(message, font))
+        else:
+            print(f'{font}: {fraktur(message, font)}')
+
+
+if __name__ == "__main__":
+    def menu():
+        import sys
+
+        if len(sys.argv) > 1:
+            message = sys.argv[1]
+        else:
+            message = ""
+
+        if len(sys.argv) == 2:
+            print(fraktur(message))
+        elif len(sys.argv) == 3:
+            font = sys.argv[2]
+            if font == 'all-with-name':
+                fraktur_all(message)
+            elif font == 'all':
+                fraktur_all(message, True)
+            else:
+                if font in fonts:
+                    print(fraktur(message, font))
+                else:
+                    found_fonts = list(filter(lambda x: x.lower().find(font.lower()) > -1, fonts.keys()))
+                    if len(found_fonts) > 0:
+                        for found_font in found_fonts:
+                            print(fraktur(message, found_font))
+                    else:
+                        print(fraktur(message, font))
+        else:
+            print(f"Usage: {sys.argv[0]} MESSAGE FONT\n\n"
+                  f"MESSAGE: Some text\n"
+                  f"FONT: {', '.join(sorted(list(fonts.keys())))}\n"
+                  f"(or partial match)\n"
+                  f"or 'all' for all fonts\n"
+                  f"or 'all-with-name' for all fonts with font name prefix (great for inspiration).")
+
+
+    menu()
