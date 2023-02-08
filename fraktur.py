@@ -4,7 +4,6 @@ import math
 W = ":alphabet-white-"
 Y = ":alphabet-yellow-"
 
-
 fonts = {
     'none': "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 ",
     'border': "𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡 ",
@@ -47,7 +46,8 @@ fonts = {
 }
 
 
-def term_color(r, g, b):
+def term_color(color):
+    r, g, b = color
     r = round(max(0.0, min(5.0, r * 6.0)))
     g = round(max(0.0, min(5.0, g * 6.0)))
     b = round(max(0.0, min(5.0, b * 6.0)))
@@ -96,15 +96,23 @@ def hsv(index, length):
         g = 0.0
         b = 1.0 - index_in_bucket
 
-    return term_color(r, g, b)
+    return r, g, b
 
 
-def rainbowify(message):
+def rainbowify(message, as_html=False):
+    def rainbow(index, char):
+        color = hsv(index, len(message))
+
+        if as_html:
+            r, g, b = color
+            return f"<font style=\"color:rgb({int(r * 255)},{int(g * 255)},{int(b * 255)})\">{char}</font>"
+        else:
+            return f"\033[38;5;{term_color(color)}m{char}\033[m"
+
     return "".join(
         list(
             map(
-                lambda a:
-                f"\033[38;5;{hsv(a[0], len(message))}m{a[1]}\033[m",
+                lambda item: rainbow(item[0], item[1]),
                 enumerate(message)
             )
         )
@@ -139,60 +147,66 @@ def fraktur(message, font):
     return out
 
 
-def fraktur_all(message, selected_fonts=None, with_name=False, colorized=False):
+def fraktur_all(message, selected_fonts=None, modes=None):
+    if not modes:
+        modes = []
+
     if selected_fonts is None:
         selected_fonts = list(fonts.keys())
 
     for font in sorted(selected_fonts):
         result = fraktur(message, font)
-        if colorized:
-            result = "".join(rainbowify(result))
 
-        if with_name:
+        if 'rainbow' in modes:
+            html = 'html' in modes
+            result = "".join(rainbowify(result, html))
+
+        if 'name' in modes:
             print(f"{font}: {result}")
         else:
             print(result)
 
 
-def generate(message: str, font: str = None, with_name: bool = False, rainbowify: bool = False):
+def generate(message: str, font: str = None, modes: list = None):
+    if not modes:
+        modes = []
+
     if not font:
-        fraktur_all(message, ['fraktur'], with_name, rainbowify)
+        fraktur_all(message, ['fraktur'], modes)
     else:
         if font == 'all':
-            fraktur_all(message, list(fonts.keys()), with_name, rainbowify)
+            fraktur_all(message, list(fonts.keys()), modes)
         else:
             if font in fonts:
-                fraktur_all(message, [font], with_name, rainbowify)
+                fraktur_all(message, [font], modes)
             else:
                 found_fonts = list(filter(lambda x: x.lower().find(font.lower()) > -1, fonts.keys()))
                 if len(found_fonts) > 0:
-                    fraktur_all(message, found_fonts, with_name, rainbowify)
+                    fraktur_all(message, found_fonts, modes)
                 else:
                     print(f"Font {font} not found.")
 
 
 def main():
     import sys
+    import argparse
 
-    if len(sys.argv) == 2:
-        generate(message=sys.argv[1])
-    elif len(sys.argv) == 3:
-        generate(message=sys.argv[1], font=sys.argv[2])
-    elif len(sys.argv) == 4:
-        generate(message=sys.argv[1], font=sys.argv[2], with_name=sys.argv[3].lower() == 'true')
-    elif len(sys.argv) == 5:
-        generate(message=sys.argv[1], font=sys.argv[2], with_name=sys.argv[3].lower() == 'true',
-                 rainbowify=sys.argv[4].lower() == 'true')
-    else:
-        print(
-            f"Usage: {sys.argv[0]} [MESSAGE [FONT [WITH_NAME [RAINBOWIFY]]]]\n\n"
-            f"MESSAGE:\tsome text\n"
-            f"FONT:\t\t{', '.join(sorted(list(fonts.keys())))}\n"
-            f"\t\tor 'all' for all fonts\n"
-            f"\t\tor partial match\n"
-            f"WITH_NAME:\t'True' for enabling printing of names.\n"
-            f"RAINBOWIFY:\t'True' for enabling colorization of fonts."
-        )
+    parser = argparse.ArgumentParser(
+        prog=sys.argv[0],
+        description="Fraturing all the things, aka make them beautiful or at least try.",
+    )
+
+    parser.add_argument('message', type=str, )
+    parser.add_argument('--font', '-f', metavar='FONT | all')
+    parser.add_argument('--modes', '-m', metavar='MODE', nargs='+')
+
+    args = parser.parse_args()
+
+    generate(
+        message=args.message,
+        font=args.font,
+        modes=args.modes,
+    )
 
 
 if __name__ == "__main__":
