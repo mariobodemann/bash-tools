@@ -200,14 +200,38 @@ def main():
 
     parser = argparse.ArgumentParser(
         prog=sys.argv[0],
-        description="Fraturing all the things, aka make them beautiful or at least try.",
+        description="Frakturing all the things, aka make them beautiful or at least try.",
     )
 
-    parser.add_argument('message', type=str, )
-    parser.add_argument('--font', '-f', metavar='FONT | all')
-    parser.add_argument('--modes', '-m', metavar='MODE', nargs='+')
+    parser.add_argument(
+        'message',
+        type=str,
+        nargs='*',
+        default="Hello World.",
+        help="Text to be frakturzied. Defaults to 'Hello World.'.")
+    parser.add_argument(
+        '--font', '-f',
+        metavar='FONT | all',
+        help=f'One font of "{", ".join(fonts.keys())}", or "all" for all fonts consecutively.')
+    parser.add_argument(
+        '--modes', '-m',
+        metavar='MODE',
+        nargs='+',
+        help='One of these modes: "rainbow, html, name".'
+    )
 
     args = parser.parse_args()
+
+    if not args.message:
+        print('No "message" given')
+        args.message = 'Hello World.'
+    else:
+        map(lambda x: x.strip(), args.message)
+
+        args.message = " ".join(args.message)
+        if len(args.message.strip()) == 0:
+            print('No message given')
+            args.message = 'Hello World.'
 
     generate(
         message=args.message,
