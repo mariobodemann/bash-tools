@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo -ne "\033[35mWhat do you want to frakturize?\033[m "
+read TEXT
+
+L=0
+for LINE in $(python3 fraktur.py "${TEXT}" -f all | sed 's/ /_/g'); do
+	printf "\033[35m% 3d\033[m: %s\n" $((L++)) "$(echo $LINE | sed 's/_/ /g')"
+done
+
+echo -ne "Which one? "
+read LINE
+
+L=0
+for TEXT_LINE in $(python3 fraktur.py "${TEXT}" -f all | sed 's/ /_/g'); do
+	if [[ "$L" == "$LINE" ]]; then
+		echo -n $TEXT_LINE | sed 's/_/ /g' | termux-clipboard-set
+		echo -e "\033[35mCopied to clipboard.\033[m"
+		break
+	else
+		((L++))
+	fi
+done
+
