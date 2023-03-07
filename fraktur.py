@@ -220,12 +220,20 @@ def main():
         nargs='+',
         help='One of these modes: "rainbow, html, name".'
     )
+    parser.add_argument(
+        '--list', '-l',
+        action='store_true',
+        help='List all fonts. Excluding meta fonts (like \'all\').'
+    )
 
     args = parser.parse_args()
-
+    doit = True
     if not args.message:
         print('No "message" given')
         args.message = 'Hello World.'
+    elif args.list:
+        print(",".join(fonts.keys()))
+        doit = False
     else:
         map(lambda x: x.strip(), args.message)
 
@@ -234,11 +242,12 @@ def main():
             print('No message given')
             args.message = 'Hello World.'
 
-    generate(
-        message=args.message,
-        font=args.font,
-        modes=args.modes,
-    )
+    if doit:
+        generate(
+            message=args.message,
+            font=args.font,
+            modes=args.modes,
+        )
 
 
 if __name__ == "__main__":
