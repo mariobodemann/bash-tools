@@ -208,7 +208,7 @@ def main():
         'message',
         type=str,
         nargs='*',
-        default="Hello World.",
+        default=["Hello World."],
         help="Text to be frakturzied. Defaults to 'Hello World.'.")
     parser.add_argument(
         '--font', '-f',
