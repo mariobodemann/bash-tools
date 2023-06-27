@@ -18,7 +18,7 @@ def slackify(color: str | tuple, letter: str):
         if isinstance(color, type(())):
             color = color[random.Random().randint(0, len(color) - 1)]
 
-        return f":alphabet-{color}-{letter}:"
+        return f":alphabet-{color.lower()}-{letter.lower()}:"
 
 
 default_fraktur = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
