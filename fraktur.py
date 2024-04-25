@@ -4,6 +4,9 @@ import random
 
 
 def slackify(color: str | tuple, letter: str):
+    if isinstance(color, type(())):
+        color = color[random.Random().randint(0, len(color) - 1)]
+
     if letter.isdigit():
         num_to_slack = [
             ":zero:", ":one:", ":two:", ":three:", ":four:", ":five:", ":six:", ":seven:", ":eight:", ":nine:",
@@ -14,10 +17,11 @@ def slackify(color: str | tuple, letter: str):
             return num_to_slack[0]
     elif letter == ' ':
         return '   '
+    elif letter == '?':
+        return f":alphabet-{color}-question:"
+    elif letter == '!':
+        return f":alphabet-{color}-exclamation:"
     else:
-        if isinstance(color, type(())):
-            color = color[random.Random().randint(0, len(color) - 1)]
-
         return f":alphabet-{color.lower()}-{letter.lower()}:"
 
 
