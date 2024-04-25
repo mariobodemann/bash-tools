@@ -181,9 +181,9 @@ def fraktur_all(message, selected_fonts=None, modes=None):
             result = "".join(rainbowify(result, html))
 
         if 'name' in modes:
-            print(f"{font}: {result}")
-        else:
-            print(result)
+             result = f"{font}: {result}"
+
+        print(result)
 
 
 def generate(message: str, font: str = None, modes: list = None):
