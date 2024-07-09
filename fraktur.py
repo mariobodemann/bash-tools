@@ -232,7 +232,9 @@ def main():
     parser.add_argument(
         '--modes', '-m',
         metavar='MODE',
-        nargs='+',
+        action='store',
+        type=str,
+        nargs='*',
         help='One of these modes: "rainbow, html, name".'
     )
     parser.add_argument(
