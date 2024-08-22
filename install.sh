@@ -25,3 +25,6 @@ if command -v termux-open; then
 
 	cp -fr shortcuts $HOME/.shortcuts
 fi
+
+echo -e "$(rainbow 'Done, now consider installing github.com/mariobodemann/s9s too')"
+
