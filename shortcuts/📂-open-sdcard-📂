@@ -1,5 +1,0 @@
-#!/data/data/com.termux/files/usr/bin/bash
-
-source $HOME/.profile
-cd /sdcard/Download
-bash -l

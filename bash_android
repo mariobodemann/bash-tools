@@ -1,23 +1,3 @@
-function android_unlock() {
-	adb shell input keyevent 26; #power
-	#                     x1  y1  x2  y2  duration
-	adb shell input swipe 390 910 735 910 500
-}
-
-function android_connect_wearable() {
-	adb forward tcp:4444 localabstract:/adb-hub
-	adb connect 127.0.0.1:4444
-	adb devices -l
-}
-
-function android_tempfile_name() {
-	echo "device-$(date +%F-%H%M%S).png"
-}
-
-function android_screencap() {
-	adb $@ shell screencap -p | sed 's/\r$//'
-}
-
 export ANDROID_HOME=$HOME/Android/sdk
 export ANDROID_NDK_HOME=$ANDROID_HOME/ndk-bundle
 
