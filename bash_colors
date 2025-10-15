@@ -93,3 +93,5 @@ function random_cow() {
 function dad() {
 	rainbowify_output "$(cowsay -f $(random_cow) "$(curl -s -H "Accept: text/plain" https://icanhazdadjoke.com)")"
 }
+
+export GREP_COLORS='mt=42'
