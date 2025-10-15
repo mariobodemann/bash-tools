@@ -1,0 +1,15 @@
+function monme() {
+  if [ -z "$1" ]; then
+    MON_ID="$((RANDOM % 1303))"
+  else
+    MON_ID="$1"
+  fi
+  echo -n "$MON_ID: "
+  MON="$(curl -s https://pokeapi.co/api/v2/pokemon/${MON_ID}/ | jq '.|{n:.name,u:.sprites.front_default}' 2>/dev/null)"
+  if [ -z "$MON" ]; then
+    echo 'na'
+  else
+    echo ${MON} | jq -r .n
+    curl -s $(echo ${MON} | jq -r .u) | magick - -trim +polaroid png:- | chafa --align center --scale 5 -
+  fi
+}
